@@ -137,28 +137,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // Header
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            l10n.createYourAccount,
-                            style: TextStyle(
-                              fontFamily: 'Cinzel',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 28,
-                              height: 1.2,
-                              color: isDark ? const Color(0xFFF3F4F6) : const Color(0xFF111827),
-                            ),
-                          ),
-                          Hero(
-                            tag: 'app_logo_hero',
-                            child: ClipOval(
-                              child: Image.asset(
-                                'assets/images/logo.webp',
-                                width: 56,
-                                height: 56,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+                          _buildHeaderTitle(isDark),
+                          _buildCardLogo(isDark),
                         ],
                       ),
                       const SizedBox(height: 28),
@@ -176,6 +158,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   /// Mobile Fluid Header + Bottom Sheet Layout
   Widget _buildMobileLayout(BuildContext context, AppLocalizations l10n, bool isDark) {
+    final canPop = Navigator.of(context).canPop();
+
     return Column(
       children: [
         // Top Header Section
@@ -187,33 +171,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      if (Navigator.of(context).canPop()) {
+                  if (canPop)
+                    IconButton(
+                      onPressed: () {
                         Navigator.of(context).pop();
-                      } else {
-                        Navigator.of(context).pushReplacementNamed('/login');
-                      }
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: isDark ? Colors.white70 : const Color(0xFF1F2937),
-                      size: 20,
-                    ),
-                  ),
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: isDark ? Colors.white70 : const Color(0xFF1F2937),
+                        size: 20,
+                      ),
+                    )
+                  else
+                    const SizedBox.shrink(),
                   const AuthLanguagePicker(),
                 ],
               ),
-              const SizedBox(height: 14),
-              Text(
-                l10n.createYourAccount,
-                style: TextStyle(
-                  fontFamily: 'Cinzel',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 28,
-                  height: 1.2,
-                  color: isDark ? const Color(0xFFF3F4F6) : const Color(0xFF111827),
-                ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  _buildHeaderTitle(isDark),
+                  _buildCardLogo(isDark),
+                ],
               ),
               const SizedBox(height: 10),
             ],
@@ -244,6 +225,66 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  /// Header Typography Hierarchy: Small lighter "CREATE YOUR" & large bold "ACCOUNT"
+  Widget _buildHeaderTitle(bool isDark) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'CREATE YOUR',
+          style: TextStyle(
+            fontFamily: 'Cinzel',
+            fontWeight: FontWeight.w400,
+            fontSize: 15,
+            letterSpacing: 1.5,
+            color: isDark ? const Color(0xFF9CA3AF) : const Color(0xFF4B5563),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'ACCOUNT',
+          style: TextStyle(
+            fontFamily: 'Cinzel',
+            fontWeight: FontWeight.w700,
+            fontSize: 28,
+            height: 1.15,
+            color: isDark ? const Color(0xFFF3F4F6) : const Color(0xFF111827),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Clearly Visible Logo with Soft Ambient Illumination
+  Widget _buildCardLogo(bool isDark) {
+    return Container(
+      width: 58,
+      height: 58,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFB45309).withValues(alpha: isDark ? 0.35 : 0.20),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      child: ClipOval(
+        child: Image.asset(
+          'assets/images/logo.webp',
+          width: 58,
+          height: 58,
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => Container(
+            color: const Color(0xFFB45309),
+            child: const Icon(Icons.church_rounded, color: Colors.white, size: 30),
+          ),
+        ),
+      ),
     );
   }
 
@@ -381,9 +422,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
 
-          const SizedBox(height: 22),
+          const SizedBox(height: 20),
 
-          // Switch to Sign In
+          // Switch to Sign In with Accessible Touch Target (>= 48px)
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -392,21 +433,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   l10n.alreadyHaveAccount,
                   style: TextStyle(
                     color: isDark ? const Color(0xFF9CA3AF) : const Color(0xFF6B7280),
-                    fontSize: 13.5,
+                    fontSize: 14,
                   ),
                 ),
-                const SizedBox(width: 6),
-                GestureDetector(
-                  onTap: () {
+                TextButton(
+                  onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/login');
                   },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                    minimumSize: const Size(48, 48),
+                    foregroundColor: const Color(0xFFB45309),
+                  ),
                   child: Text(
                     l10n.signIn,
                     style: const TextStyle(
                       fontFamily: 'Cinzel',
                       fontWeight: FontWeight.w700,
-                      fontSize: 13.5,
-                      color: Color(0xFFB45309),
+                      fontSize: 14,
                     ),
                   ),
                 ),

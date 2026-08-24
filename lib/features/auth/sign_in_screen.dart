@@ -8,7 +8,7 @@ import 'package:politia/widgets/auth_language_picker.dart';
 import 'package:politia/widgets/custom_text_field.dart';
 import 'package:politia/widgets/politia_branded_background.dart';
 
-/// Sign In Screen matching the left screen mockup with responsive Desktop/PC & Mobile compatibility.
+/// Sign In Screen with refined UI/UX, typography hierarchy, high contrast inputs, and accessible touch targets.
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -125,31 +125,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Header
+                      // Header with Hierarchy & Visible Logo
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            l10n.helloSignIn,
-                            style: TextStyle(
-                              fontFamily: 'Cinzel',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 28,
-                              height: 1.2,
-                              color: isDark ? const Color(0xFFF3F4F6) : const Color(0xFF111827),
-                            ),
-                          ),
-                          Hero(
-                            tag: 'app_logo_hero',
-                            child: ClipOval(
-                              child: Image.asset(
-                                'assets/images/logo.webp',
-                                width: 56,
-                                height: 56,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+                          _buildHeaderTitle(isDark),
+                          _buildCardLogo(isDark),
                         ],
                       ),
                       const SizedBox(height: 32),
@@ -196,16 +178,14 @@ class _SignInScreenState extends State<SignInScreen> {
                   const AuthLanguagePicker(),
                 ],
               ),
-              const SizedBox(height: 16),
-              Text(
-                l10n.helloSignIn,
-                style: TextStyle(
-                  fontFamily: 'Cinzel',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 28,
-                  height: 1.2,
-                  color: isDark ? const Color(0xFFF3F4F6) : const Color(0xFF111827),
-                ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  _buildHeaderTitle(isDark),
+                  _buildCardLogo(isDark),
+                ],
               ),
               const SizedBox(height: 12),
             ],
@@ -236,6 +216,66 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  /// Header Typography Hierarchy: Small lighter "HELLO" & large bold "SIGN IN!"
+  Widget _buildHeaderTitle(bool isDark) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'HELLO',
+          style: TextStyle(
+            fontFamily: 'Cinzel',
+            fontWeight: FontWeight.w400,
+            fontSize: 16,
+            letterSpacing: 1.5,
+            color: isDark ? const Color(0xFF9CA3AF) : const Color(0xFF4B5563),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'SIGN IN!',
+          style: TextStyle(
+            fontFamily: 'Cinzel',
+            fontWeight: FontWeight.w700,
+            fontSize: 28,
+            height: 1.15,
+            color: isDark ? const Color(0xFFF3F4F6) : const Color(0xFF111827),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Clearly Visible Logo with Soft Ambient Illumination
+  Widget _buildCardLogo(bool isDark) {
+    return Container(
+      width: 58,
+      height: 58,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFB45309).withValues(alpha: isDark ? 0.35 : 0.20),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      child: ClipOval(
+        child: Image.asset(
+          'assets/images/logo.webp',
+          width: 58,
+          height: 58,
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => Container(
+            color: const Color(0xFFB45309),
+            child: const Icon(Icons.church_rounded, color: Colors.white, size: 30),
+          ),
+        ),
+      ),
     );
   }
 
@@ -271,7 +311,7 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(height: 20),
           ],
 
-          // Email Field
+          // Email Field with High Contrast
           CustomAuthTextField(
             label: l10n.email,
             controller: _emailController,
@@ -288,7 +328,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
           const SizedBox(height: 24),
 
-          // Password Field
+          // Password Field with High Contrast
           CustomAuthTextField(
             label: l10n.password,
             controller: _passwordController,
@@ -304,9 +344,9 @@ class _SignInScreenState extends State<SignInScreen> {
             },
           ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
 
-          // Forgot Password
+          // Forgot Password with Accessible Touch Target (>= 48px)
           Align(
             alignment: AlignmentDirectional.centerEnd,
             child: TextButton(
@@ -316,22 +356,21 @@ class _SignInScreenState extends State<SignInScreen> {
                 );
               },
               style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(50, 30),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                minimumSize: const Size(48, 48),
+                foregroundColor: isDark ? const Color(0xFF9CA3AF) : const Color(0xFF4B5563),
               ),
               child: Text(
                 l10n.forgotPassword,
-                style: TextStyle(
-                  color: isDark ? const Color(0xFF9CA3AF) : const Color(0xFF4B5563),
-                  fontSize: 13,
+                style: const TextStyle(
+                  fontSize: 13.5,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
           ),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
 
           // SIGN IN Button
           SizedBox(
@@ -368,9 +407,9 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
 
-          // Switch to Sign Up
+          // Switch to Sign Up with Accessible Touch Target (>= 48px)
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -379,21 +418,24 @@ class _SignInScreenState extends State<SignInScreen> {
                   l10n.dontHaveAccount,
                   style: TextStyle(
                     color: isDark ? const Color(0xFF9CA3AF) : const Color(0xFF6B7280),
-                    fontSize: 13.5,
+                    fontSize: 14,
                   ),
                 ),
-                const SizedBox(width: 6),
-                GestureDetector(
-                  onTap: () {
+                TextButton(
+                  onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/signup');
                   },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                    minimumSize: const Size(48, 48),
+                    foregroundColor: const Color(0xFFB45309),
+                  ),
                   child: Text(
                     l10n.signUp,
                     style: const TextStyle(
                       fontFamily: 'Cinzel',
                       fontWeight: FontWeight.w700,
-                      fontSize: 13.5,
-                      color: Color(0xFFB45309),
+                      fontSize: 14,
                     ),
                   ),
                 ),

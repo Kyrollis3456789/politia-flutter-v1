@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Clean, styled authentication text field matching the reference design.
+/// Clean, styled authentication text field with high contrast and accessible touch targets.
 class CustomAuthTextField extends StatefulWidget {
   const CustomAuthTextField({
     super.key,
@@ -56,9 +56,9 @@ class _CustomAuthTextFieldState extends State<CustomAuthTextField> {
             letterSpacing: 0.2,
           ),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: 4),
 
-        // Text Form Field
+        // Text Form Field with high contrast & comfortable padding
         TextFormField(
           controller: widget.controller,
           obscureText: widget.isPassword ? _obscureText : false,
@@ -67,58 +67,58 @@ class _CustomAuthTextFieldState extends State<CustomAuthTextField> {
           onFieldSubmitted: widget.onFieldSubmitted,
           validator: widget.validator,
           style: TextStyle(
-            color: isDark ? const Color(0xFFF3F4F6) : const Color(0xFF1F2937),
-            fontSize: 15,
+            color: isDark ? Colors.white : const Color(0xFF111827),
+            fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
           decoration: InputDecoration(
             hintText: widget.hintText,
             hintStyle: TextStyle(
-              color: isDark ? const Color(0xFF6B7280) : const Color(0xFF9CA3AF),
-              fontSize: 14,
+              color: isDark ? Colors.grey[400] : Colors.grey[600],
+              fontSize: 15,
             ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 8),
+            contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
             isDense: true,
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                 color: isDark
-                    ? Colors.white.withValues(alpha: 0.18)
-                    : Colors.black.withValues(alpha: 0.15),
-                width: 1.2,
+                    ? Colors.white.withValues(alpha: 0.25)
+                    : Colors.black.withValues(alpha: 0.20),
+                width: 1.4,
               ),
             ),
             focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
                 color: accentColor,
-                width: 2.0,
+                width: 2.2,
               ),
             ),
             errorBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.redAccent,
-                width: 1.2,
+                width: 1.4,
               ),
             ),
             focusedErrorBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.redAccent,
-                width: 2.0,
+                width: 2.2,
               ),
             ),
             suffixIconConstraints: const BoxConstraints(
-              minWidth: 28,
-              minHeight: 28,
+              minWidth: 44,
+              minHeight: 44,
             ),
             suffixIcon: widget.isPassword
                 ? IconButton(
                     padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
+                    constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
                     icon: Icon(
                       _obscureText
                           ? Icons.visibility_off_outlined
                           : Icons.visibility_outlined,
-                      size: 20,
-                      color: isDark ? const Color(0xFF9CA3AF) : const Color(0xFF6B7280),
+                      size: 22,
+                      color: isDark ? Colors.grey[300] : Colors.grey[700],
                     ),
                     onPressed: () {
                       setState(() {
@@ -127,10 +127,13 @@ class _CustomAuthTextFieldState extends State<CustomAuthTextField> {
                     },
                   )
                 : (widget.isValid == true
-                    ? const Icon(
-                        Icons.check_rounded,
-                        size: 18,
-                        color: Colors.green,
+                    ? const Padding(
+                        padding: EdgeInsets.only(right: 8.0),
+                        child: Icon(
+                          Icons.check_rounded,
+                          size: 20,
+                          color: Colors.green,
+                        ),
                       )
                     : null),
           ),
