@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../core/services/init_service.dart';
 import '../../widgets/politia_branded_background.dart';
 
-/// Politia Splash Screen — Refined presentation layer with tightly fitted ambient glow
-/// matching the logo size (+5px margin) and optical centering.
+/// Politia Splash Screen — Master presentation layer with refined Cinzel typography,
+/// perfectly fitted ambient amber glow, responsive optical alignment, and accessible spinner.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Trigger silent background bootstrap without routing away
+    // Trigger silent background bootstrap
     _runSilentBootstrap();
   }
 
@@ -112,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen>
               logoSize = 192.0;
             }
 
-            // Responsive typography
+            // Responsive typography (scaled down on mobile to prevent early break)
             final double titleFontSize;
             final double sloganFontSize;
             final double sloganLetterSpacing;
@@ -158,13 +158,13 @@ class _SplashScreenState extends State<SplashScreen>
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Logo with tightly matched ambient glow (+5px bleed)
+                      // Logo with tightly fitted ambient glow (+5px bleed)
                       SizedBox(
                         width: logoSize,
                         height: logoSize,
                         child: OverflowBox(
-                          maxWidth: logoSize + 24.0,
-                          maxHeight: logoSize + 24.0,
+                          maxWidth: logoSize + 28.0,
+                          maxHeight: logoSize + 28.0,
                           child: _buildGlowingLogo(
                             logoSize: logoSize,
                             isDark: isDark,
@@ -273,7 +273,7 @@ class _SplashScreenState extends State<SplashScreen>
     required double glowOpacity,
     required bool isDark,
   }) {
-    // Exact tight glow diameter: logoSize + 10 (extends +5px margin around logo perimeter)
+    // Exact fitted glow diameter with a tight +5px perimeter margin
     final glowDiameter = logoSize + 10.0;
 
     return Stack(
@@ -288,7 +288,7 @@ class _SplashScreenState extends State<SplashScreen>
             boxShadow: [
               BoxShadow(
                 color: const Color(0xFFB45309).withValues(alpha: glowOpacity.clamp(0.0, 1.0)),
-                blurRadius: 12.0,
+                blurRadius: 16.0,
                 spreadRadius: 3.0,
               ),
             ],
@@ -297,7 +297,7 @@ class _SplashScreenState extends State<SplashScreen>
                 const Color(0xFFB45309).withValues(alpha: glowOpacity.clamp(0.0, 1.0)),
                 const Color(0xFFB45309).withValues(alpha: 0.0),
               ],
-              stops: const [0.75, 1.0],
+              stops: const [0.70, 1.0],
             ),
           ),
         ),
