@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../core/services/init_service.dart';
 import '../../widgets/politia_branded_background.dart';
 
-/// Politia Splash Screen — Refined presentation layer with exact optical centering,
-/// light mode glow/spinner contrast enhancements, and non-breaking title units.
+/// Politia Splash Screen — Exact presentation layer with constrained logo OverflowBox
+/// and optically centered Alignment(0, -0.10).
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -89,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen>
             final double titleToSloganGap;
             final double sloganToSpinnerGap;
             if (vw < 440) {
-              titleTopGap = 18.0;
+              titleTopGap = 20.0;
               titleToSloganGap = 6.0;
               sloganToSpinnerGap = 28.0;
             } else if (vw <= 900) {
@@ -112,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen>
               logoSize = 192.0;
             }
 
-            // Responsive typography (scaled down on mobile to prevent early break)
+            // Responsive typography
             final double titleFontSize;
             final double sloganFontSize;
             final double sloganLetterSpacing;
@@ -148,81 +148,85 @@ class _SplashScreenState extends State<SplashScreen>
                 ? const Color(0xFFB45309).withValues(alpha: 0.18)
                 : const Color(0xFF92400E).withValues(alpha: 0.20);
 
-            return SizedBox(
-              width: constraints.maxWidth,
-              height: constraints.maxHeight,
-              child: Align(
-                alignment: const Alignment(0, -0.10), // Optical centering: 10% above mathematical center
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 480.0),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: responsiveHPad),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Glowing Logo
-                        _buildGlowingLogo(
-                          logoSize: logoSize,
-                          isDark: isDark,
-                          disableAnimations: disableAnimations,
-                        ),
-
-                        SizedBox(height: titleTopGap),
-
-                        // Brand Title — Hardcoded string with non-breaking space between Coptic and Orthodox
-                        Text(
-                          'At Church - Coptic\u00A0Orthodox',
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontFamily: 'Cinzel',
-                            fontWeight: FontWeight.w700,
-                            fontSize: titleFontSize,
-                            color: titleColor,
-                            letterSpacing: 0.5,
-                            height: 1.3,
+            return Align(
+              alignment: const Alignment(0, -0.10), // Direct optical centering: 10% above mathematical center
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480.0),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: responsiveHPad),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Constrained Logo with Overflowing Ambient Glow
+                      SizedBox(
+                        width: logoSize,
+                        height: logoSize,
+                        child: OverflowBox(
+                          maxWidth: logoSize * 2.2,
+                          maxHeight: logoSize * 2.2,
+                          child: _buildGlowingLogo(
+                            logoSize: logoSize,
+                            isDark: isDark,
+                            disableAnimations: disableAnimations,
                           ),
                         ),
+                      ),
 
-                        SizedBox(height: titleToSloganGap),
+                      SizedBox(height: titleTopGap),
 
-                        // Slogan
-                        Text(
-                          'ANCHORED IN FAITH, CONNECTED IN LOVE',
-                          textAlign: TextAlign.center,
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontFamily: 'Cinzel',
-                            fontWeight: FontWeight.w400,
-                            fontSize: sloganFontSize,
-                            color: sloganColor,
-                            letterSpacing: sloganLetterSpacing,
-                            height: 1.6,
-                          ),
+                      // Brand Title — Hardcoded string with non-breaking space between Coptic and Orthodox
+                      Text(
+                        'At Church - Coptic\u00A0Orthodox',
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(
+                          fontFamily: 'Cinzel',
+                          fontWeight: FontWeight.w700,
+                          fontSize: titleFontSize,
+                          color: titleColor,
+                          letterSpacing: 0.5,
+                          height: 1.3,
                         ),
+                      ),
 
-                        SizedBox(height: sloganToSpinnerGap),
+                      SizedBox(height: titleToSloganGap),
 
-                        // Loading Indicator
-                        Semantics(
-                          label: 'Application loading',
-                          child: SizedBox(
-                            width: 28,
-                            height: 28,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1.5,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                spinnerValueColor,
-                              ),
-                              backgroundColor: spinnerTrackColor,
+                      // Slogan
+                      Text(
+                        'ANCHORED IN FAITH, CONNECTED IN LOVE',
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                        style: TextStyle(
+                          fontFamily: 'Cinzel',
+                          fontWeight: FontWeight.w400,
+                          fontSize: sloganFontSize,
+                          color: sloganColor,
+                          letterSpacing: sloganLetterSpacing,
+                          height: 1.6,
+                        ),
+                      ),
+
+                      SizedBox(height: sloganToSpinnerGap),
+
+                      // Loading Indicator
+                      Semantics(
+                        label: 'Application loading',
+                        child: SizedBox(
+                          width: 28,
+                          height: 28,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1.5,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              spinnerValueColor,
                             ),
+                            backgroundColor: spinnerTrackColor,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
