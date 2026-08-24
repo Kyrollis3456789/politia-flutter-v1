@@ -3,7 +3,7 @@ import '../../core/services/init_service.dart';
 import '../../widgets/politia_branded_background.dart';
 
 /// Politia Splash Screen — Soft organic breathing glow with feathered ambient aura,
-/// Cinzel typography, and responsive optical layout with automated route resolution.
+/// Cinzel typography, and responsive optical layout with automated route resolution to /login.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
     } catch (e) {
       debugPrint('[SplashScreen] Initialization note: $e');
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/welcome');
+        Navigator.of(context).pushReplacementNamed('/login');
       }
     }
   }
@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       body: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushReplacementNamed('/welcome');
+          Navigator.of(context).pushReplacementNamed('/login');
         },
         behavior: HitTestBehavior.opaque,
         child: PolitiaBrandedBackground(
@@ -144,20 +144,20 @@ class _SplashScreenState extends State<SplashScreen>
 
               // Light/Dark specific colors
               final titleColor = isDark
-                  ? const Color(0xFFF3F4F6)
-                  : const Color(0xFF1C2340);
+                ? const Color(0xFFF3F4F6)
+                : const Color(0xFF1C2340);
 
               final sloganColor = isDark
-                  ? const Color(0xFF9CA3AF)
-                  : const Color(0xFF3D3520); // Warm dark brown for high contrast on parchment
+                ? const Color(0xFF9CA3AF)
+                : const Color(0xFF3D3520); // Warm dark brown for high contrast on parchment
 
               final spinnerValueColor = isDark
-                  ? const Color(0xFFB45309)
-                  : const Color(0xFF92400E); // Darker amber for clear visibility in light mode
+                ? const Color(0xFFB45309)
+                : const Color(0xFF92400E); // Darker amber for clear visibility in light mode
 
               final spinnerTrackColor = isDark
-                  ? const Color(0xFFB45309).withValues(alpha: 0.18)
-                  : const Color(0xFF92400E).withValues(alpha: 0.20);
+                ? const Color(0xFFB45309).withValues(alpha: 0.18)
+                : const Color(0xFF92400E).withValues(alpha: 0.20);
 
               return Align(
                 alignment: const Alignment(0, -0.10), // Optical centering: 10% above mathematical center

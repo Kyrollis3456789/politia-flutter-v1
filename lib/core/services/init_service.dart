@@ -14,11 +14,11 @@ class InitializationService {
   static const int minSplashDurationMs = 4000;
 
   /// Executes initialization with a minimum 4-second gatekeeper timer.
-  /// Resolves to the appropriate route string: '/dashboard' or '/welcome'.
+  /// Resolves to the appropriate route string: '/dashboard' or '/login'.
   Future<String> resolveInitialization([BuildContext? context]) async {
     final stopwatch = Stopwatch()..start();
 
-    String targetRoute = '/welcome';
+    String targetRoute = '/login';
 
     try {
       final results = await Future.wait([
@@ -28,7 +28,7 @@ class InitializationService {
       targetRoute = results.first as String;
     } catch (e) {
       debugPrint('[InitializationService] Error during bootstrap: $e');
-      targetRoute = '/welcome';
+      targetRoute = '/login';
     } finally {
       stopwatch.stop();
       debugPrint('[InitializationService] Initialization completed in ${stopwatch.elapsedMilliseconds}ms -> Route: $targetRoute');
@@ -57,7 +57,7 @@ class InitializationService {
         debugPrint('[InitializationService] System locale detected: $systemLocale');
       }
 
-      return '/welcome';
+      return '/login';
     }
 
     // -------------------------------------------------------------------------
@@ -76,7 +76,7 @@ class InitializationService {
       if (response == null) {
         debugPrint('[InitializationService] Branch B: Profile not found in database. Resetting credentials.');
         await prefs.remove(prefKeyUuid);
-        return '/welcome';
+        return '/login';
       }
 
       // 2. Profile verified - synchronize preferences if present
@@ -98,7 +98,7 @@ class InitializationService {
       }
 
       // If cannot verify and no session, fallback safely
-      return '/welcome';
+      return '/login';
     }
   }
 }

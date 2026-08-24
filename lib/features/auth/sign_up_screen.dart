@@ -179,7 +179,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (Navigator.of(context).canPop()) {
                         Navigator.of(context).pop();
                       } else {
-                        Navigator.of(context).pushReplacementNamed('/welcome');
+                        Navigator.of(context).pushReplacementNamed('/login');
                       }
                     },
                     icon: Icon(

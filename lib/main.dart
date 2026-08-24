@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:politia/core/services/supabase_service.dart';
-import 'package:politia/features/auth/auth_welcome_screen.dart';
 import 'package:politia/features/auth/sign_in_screen.dart';
 import 'package:politia/features/auth/sign_up_screen.dart';
 import 'package:politia/features/splash/splash_screen.dart';
@@ -79,7 +78,6 @@ class PolitiaApp extends StatelessWidget {
           initialRoute: '/',
           routes: {
             '/': (context) => const SplashScreen(),
-            '/welcome': (context) => const AuthWelcomeScreen(),
             '/login': (context) => const SignInScreen(),
             '/signup': (context) => const SignUpScreen(),
             '/dashboard': (context) => const HomeScreen(),

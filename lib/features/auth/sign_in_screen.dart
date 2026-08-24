@@ -154,6 +154,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   /// Mobile Fluid Header + Bottom Sheet Layout
   Widget _buildMobileLayout(BuildContext context, AppLocalizations l10n, bool isDark) {
+    final canPop = Navigator.of(context).canPop();
+
     return Column(
       children: [
         // Top Header Section
@@ -165,20 +167,19 @@ class _SignInScreenState extends State<SignInScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      if (Navigator.of(context).canPop()) {
+                  if (canPop)
+                    IconButton(
+                      onPressed: () {
                         Navigator.of(context).pop();
-                      } else {
-                        Navigator.of(context).pushReplacementNamed('/welcome');
-                      }
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      color: isDark ? Colors.white70 : const Color(0xFF1F2937),
-                      size: 20,
-                    ),
-                  ),
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: isDark ? Colors.white70 : const Color(0xFF1F2937),
+                        size: 20,
+                      ),
+                    )
+                  else
+                    const SizedBox.shrink(),
                   const AuthLanguagePicker(),
                 ],
               ),
@@ -317,7 +318,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
           const SizedBox(height: 32),
 
-          // SIGN IN Button (with Gradient Accent)
+          // SIGN IN Button
           SizedBox(
             width: double.infinity,
             height: 52,
