@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "appTitle": "Politia",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "welcomeMessage": "Welcome to Politia",
+  "@welcomeMessage": {
+    "description": "Welcome message displayed on the home screen"
+  },
+  "statusRunning": "Platform Engine & Localization Operational",
+  "@statusRunning": {
+    "description": "Status text confirming the platform engine is running"
+  },
+  "changeLanguage": "Language",
+  "@changeLanguage": {
+    "description": "Label for changing language"
+  }
+}
