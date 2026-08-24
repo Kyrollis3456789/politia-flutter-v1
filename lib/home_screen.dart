@@ -6,11 +6,18 @@ import 'services/locale_service.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  /// Evaluates whether the given [itemLocale] is the single active user selection.
+  bool _isSelected(Locale? itemLocale) {
+    final currentLocale = LocaleService.instance.currentLocale;
+    if (currentLocale == null && itemLocale == null) return true;
+    if (currentLocale == null || itemLocale == null) return false;
+    return currentLocale.languageCode == itemLocale.languageCode &&
+        currentLocale.countryCode == itemLocale.countryCode;
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final activeLocale = LocaleService.instance.currentLocale ??
-        Localizations.localeOf(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -26,71 +33,57 @@ class HomeScreen extends StatelessWidget {
             },
             itemBuilder: (BuildContext context) => [
               // System Default
-              const PopupMenuItem<Locale?>(
-                value: null,
-                child: Text('🌐 System Default'),
+              _buildMenuItem(
+                null,
+                'إعدادات النظام / System Default',
               ),
-              const PopupMenuDivider(),
 
-              // English Group
-              _buildLocaleItem(
+              // English Variants
+              _buildMenuItem(
                 const Locale('en'),
-                'English (Generic / LTR)',
-                activeLocale,
+                'English (Base)',
               ),
-              _buildLocaleItem(
+              _buildMenuItem(
                 const Locale('en', 'US'),
-                'English (United States)',
-                activeLocale,
+                'English (US)',
               ),
-              _buildLocaleItem(
+              _buildMenuItem(
                 const Locale('en', 'GB'),
-                'English (United Kingdom)',
-                activeLocale,
+                'English (UK)',
               ),
-              const PopupMenuDivider(),
 
-              // Arabic Group (RTL)
-              _buildLocaleItem(
+              // Arabic Variants
+              _buildMenuItem(
                 const Locale('ar'),
-                'العربية (Generic / RTL)',
-                activeLocale,
+                'العربية (عام)',
               ),
-              _buildLocaleItem(
+              _buildMenuItem(
                 const Locale('ar', 'EG'),
-                'العربية (مصر / Egypt)',
-                activeLocale,
+                'العربية (مصر)',
               ),
-              _buildLocaleItem(
+              _buildMenuItem(
                 const Locale('ar', 'SA'),
-                'العربية (السعودية / Saudi)',
-                activeLocale,
+                'العربية (السعودية)',
               ),
-              const PopupMenuDivider(),
 
-              // French Group
-              _buildLocaleItem(
+              // French Variants
+              _buildMenuItem(
                 const Locale('fr'),
-                'Français (Generic / LTR)',
-                activeLocale,
+                'Français',
               ),
-              _buildLocaleItem(
+              _buildMenuItem(
                 const Locale('fr', 'FR'),
                 'Français (France)',
-                activeLocale,
               ),
-              const PopupMenuDivider(),
 
-              // Coptic Group
-              _buildLocaleItem(
+              // Coptic Variants
+              _buildMenuItem(
                 const Locale('cop'),
-                'Ϯⲁⲥⲡⲓ ⲛ̀Ⲣⲉⲙⲛ̀Ⲭⲏⲙⲓ (Coptic Generic)',
-                activeLocale,
+                'Ϯⲁⲥⲡⲓ ⲛ̀ⲣⲉⲙⲛ̀ⲭⲏⲙⲓ',
               ),
-              _buildLocaleItem(
+              _buildMenuItem(
                 const Locale('cop', 'EG'),
-                'Ϯⲁⲥⲡⲓ ⲛ̀Ⲣⲉⲙⲛ̀Ⲭⲏⲙⲓ (Ⲭⲏⲙⲓ / Egypt)',
-                activeLocale,
+                'Ϯⲁⲥⲡⲓ ⲛ̀ⲣⲉⲙⲛ̀ⲭⲏⲙⲓ (Ⲭⲏⲙⲓ)',
               ),
             ],
           ),
@@ -160,21 +153,31 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  PopupMenuItem<Locale?> _buildLocaleItem(
-    Locale locale,
+  PopupMenuItem<Locale?> _buildMenuItem(
+    Locale? locale,
     String label,
-    Locale activeLocale,
   ) {
-    final isSelected = activeLocale.languageCode == locale.languageCode &&
-        (locale.countryCode == null || activeLocale.countryCode == locale.countryCode);
+    final active = _isSelected(locale);
 
     return PopupMenuItem<Locale?>(
       value: locale,
       child: Row(
         children: [
-          Expanded(child: Text(label)),
-          if (isSelected)
-            const Icon(Icons.check, size: 18, color: Colors.blueAccent),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontWeight: active ? FontWeight.bold : FontWeight.normal,
+                color: active ? Colors.blueAccent : null,
+              ),
+            ),
+          ),
+          if (active)
+            const Icon(
+              Icons.check,
+              size: 18,
+              color: Colors.blueAccent,
+            ),
         ],
       ),
     );
