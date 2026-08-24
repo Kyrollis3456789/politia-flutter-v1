@@ -12,10 +12,16 @@ flutter --version
 echo "==> Enabling web support..."
 flutter config --enable-web
 
+echo "==> Ensuring .env exists..."
+if [ ! -f .env ]; then
+  echo "Creating default .env from .env.example..."
+  cp .env.example .env
+fi
+
 echo "==> Getting dependencies..."
 flutter pub get
 
 echo "==> Building Flutter Web..."
-flutter build web --release --wasm
+flutter build web --release
 
 echo "==> Build complete!"
