@@ -28,3 +28,11 @@ flutter:
   assets:
     - assets/images/
     - .env
+
+  fonts:
+    - family: Cinzel
+      fonts:
+        - asset: assets/fonts/Cinzel/Cinzel-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Cinzel/Cinzel-Bold.ttf
+          weight: 700
