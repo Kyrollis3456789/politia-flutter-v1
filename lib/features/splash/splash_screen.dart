@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../core/services/init_service.dart';
 import '../../widgets/politia_branded_background.dart';
 
-/// Politia Splash Screen — Exact UI/UX Implementation with Cinzel typography and glowing logo.
+/// Politia Splash Screen — Refined presentation layer with exact optical centering,
+/// light mode glow/spinner contrast enhancements, and non-breaking title units.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Trigger silent background bootstrap
+    // Trigger silent background bootstrap without routing away
     _runSilentBootstrap();
   }
 
@@ -111,13 +112,13 @@ class _SplashScreenState extends State<SplashScreen>
               logoSize = 192.0;
             }
 
-            // Responsive typography
+            // Responsive typography (scaled down on mobile to prevent early break)
             final double titleFontSize;
             final double sloganFontSize;
             final double sloganLetterSpacing;
 
             if (vw < 440) {
-              titleFontSize = (vw * 0.062).clamp(18.0, 22.0);
+              titleFontSize = (vw * 0.055).clamp(16.0, 20.0);
               sloganFontSize = (vw * 0.026).clamp(8.5, 10.0);
               sloganLetterSpacing = (vw * 0.006).clamp(1.6, 2.8);
             } else if (vw <= 900) {
@@ -130,79 +131,98 @@ class _SplashScreenState extends State<SplashScreen>
               sloganLetterSpacing = 3.2;
             }
 
-            return Align(
-              alignment: const Alignment(0, -0.10), // Optical centering: 10% above mathematical center
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 480.0),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: responsiveHPad),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Glowing Logo
-                      _buildGlowingLogo(
-                        logoSize: logoSize,
-                        isDark: isDark,
-                        disableAnimations: disableAnimations,
-                      ),
+            // Light/Dark specific colors
+            final titleColor = isDark
+                ? const Color(0xFFF3F4F6)
+                : const Color(0xFF1C2340);
 
-                      SizedBox(height: titleTopGap),
+            final sloganColor = isDark
+                ? const Color(0xFF9CA3AF)
+                : const Color(0xFF3D3520); // Warm dark brown for high contrast on parchment
 
-                      // Brand Title — Hardcoded Dart string literal (No .arb lookup)
-                      Text(
-                        'At Church - Coptic Orthodox',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Cinzel',
-                          fontWeight: FontWeight.w700,
-                          fontSize: titleFontSize,
-                          color: isDark
-                              ? const Color(0xFFF3F4F6)
-                              : const Color(0xFF1C2340),
-                          letterSpacing: 0.5,
-                          height: 1.3,
+            final spinnerValueColor = isDark
+                ? const Color(0xFFB45309)
+                : const Color(0xFF92400E); // Darker amber for clear visibility in light mode
+
+            final spinnerTrackColor = isDark
+                ? const Color(0xFFB45309).withValues(alpha: 0.18)
+                : const Color(0xFF92400E).withValues(alpha: 0.20);
+
+            return SizedBox(
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
+              child: Align(
+                alignment: const Alignment(0, -0.10), // Optical centering: 10% above mathematical center
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 480.0),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: responsiveHPad),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Glowing Logo
+                        _buildGlowingLogo(
+                          logoSize: logoSize,
+                          isDark: isDark,
+                          disableAnimations: disableAnimations,
                         ),
-                      ),
 
-                      SizedBox(height: titleToSloganGap),
+                        SizedBox(height: titleTopGap),
 
-                      // Slogan
-                      Text(
-                        'ANCHORED IN FAITH, CONNECTED IN LOVE',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Cinzel',
-                          fontWeight: FontWeight.w400,
-                          fontSize: sloganFontSize,
-                          color: isDark
-                              ? const Color(0xFF9CA3AF)
-                              : const Color(0xFF6B7280),
-                          letterSpacing: sloganLetterSpacing,
-                          height: 1.6,
-                        ),
-                      ),
-
-                      SizedBox(height: sloganToSpinnerGap),
-
-                      // Loading Indicator
-                      Semantics(
-                        label: 'Application loading',
-                        child: SizedBox(
-                          width: 28,
-                          height: 28,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1.5,
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              Color(0xFFB45309),
-                            ),
-                            backgroundColor: isDark
-                                ? const Color(0xFFB45309).withValues(alpha: 0.18)
-                                : const Color(0xFF92400E).withValues(alpha: 0.22),
+                        // Brand Title — Hardcoded string with non-breaking space between Coptic and Orthodox
+                        Text(
+                          'At Church - Coptic\u00A0Orthodox',
+                          textAlign: TextAlign.center,
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                          style: TextStyle(
+                            fontFamily: 'Cinzel',
+                            fontWeight: FontWeight.w700,
+                            fontSize: titleFontSize,
+                            color: titleColor,
+                            letterSpacing: 0.5,
+                            height: 1.3,
                           ),
                         ),
-                      ),
-                    ],
+
+                        SizedBox(height: titleToSloganGap),
+
+                        // Slogan
+                        Text(
+                          'ANCHORED IN FAITH, CONNECTED IN LOVE',
+                          textAlign: TextAlign.center,
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                          style: TextStyle(
+                            fontFamily: 'Cinzel',
+                            fontWeight: FontWeight.w400,
+                            fontSize: sloganFontSize,
+                            color: sloganColor,
+                            letterSpacing: sloganLetterSpacing,
+                            height: 1.6,
+                          ),
+                        ),
+
+                        SizedBox(height: sloganToSpinnerGap),
+
+                        // Loading Indicator
+                        Semantics(
+                          label: 'Application loading',
+                          child: SizedBox(
+                            width: 28,
+                            height: 28,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1.5,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                spinnerValueColor,
+                              ),
+                              backgroundColor: spinnerTrackColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -219,7 +239,7 @@ class _SplashScreenState extends State<SplashScreen>
     required bool disableAnimations,
   }) {
     if (disableAnimations || _glowAnimation == null) {
-      final staticOpacity = isDark ? 0.55 : 0.28;
+      final staticOpacity = isDark ? 0.55 : 0.40;
       return _buildGlowStack(
         logoSize: logoSize,
         glowOpacity: staticOpacity,
@@ -231,9 +251,11 @@ class _SplashScreenState extends State<SplashScreen>
       animation: _glowAnimation!,
       builder: (context, _) {
         final animatedVal = _glowAnimation!.value;
+        // Peak opacity at 1.0: 0.72 (dark) / 0.62 (light)
+        // Trough opacity at 0.45: 0.32 (dark) / 0.28 (light)
         final glowOpacity = isDark
             ? animatedVal * 0.72
-            : animatedVal * 0.38;
+            : animatedVal * 0.62;
 
         return _buildGlowStack(
           logoSize: logoSize,
