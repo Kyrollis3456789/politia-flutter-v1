@@ -1,8 +1,8 @@
 {
   "@@locale": "cop_EG",
   "appTitle": "Politia",
-  "welcomeMessage": "Ⲛⲟϥⲣⲓ ϧⲉⲛ Politia (Ⲭⲏⲙⲓ)",
-  "statusRunning": "Platform Engine Operational (Ⲭⲏⲙⲓ)",
+  "welcomeMessage": "Ⲛⲟϥⲣⲓ ϧⲉⲛ Politia",
+  "statusRunning": "Platform Engine Operational",
   "changeLanguage": "Ϯⲁⲥⲡⲓ",
   "welcomeBack": "Ⲛⲟϥⲣⲓ ⲟⲛ",
   "signIn": "Ϣⲉ ⲉϧⲟⲩⲛ",

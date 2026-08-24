@@ -1,8 +1,8 @@
 {
   "@@locale": "fr_FR",
   "appTitle": "Politia",
-  "welcomeMessage": "Bienvenue sur Politia (France)",
-  "statusRunning": "Moteur de plateforme opérationnel (France)",
+  "welcomeMessage": "Bienvenue sur Politia",
+  "statusRunning": "Moteur de plateforme opérationnel",
   "changeLanguage": "Langue",
   "welcomeBack": "Bienvenue à nouveau",
   "signIn": "SE CONNECTER",

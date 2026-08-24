@@ -1,8 +1,8 @@
 {
   "@@locale": "en_GB",
   "appTitle": "Politia",
-  "welcomeMessage": "Welcome to Politia (UK)",
-  "statusRunning": "Platform Engine Operational (UK)",
+  "welcomeMessage": "Welcome to Politia",
+  "statusRunning": "Platform Engine & Localization Operational",
   "changeLanguage": "Language",
   "welcomeBack": "Welcome Back",
   "signIn": "SIGN IN",

@@ -2,36 +2,90 @@
   "@@locale": "en",
   "appTitle": "Politia",
   "@appTitle": {
-    "description": "The title of the application"
+    "description": "Localization for appTitle"
   },
   "welcomeMessage": "Welcome to Politia",
   "@welcomeMessage": {
-    "description": "Welcome message displayed on the home screen"
+    "description": "Localization for welcomeMessage"
   },
   "statusRunning": "Platform Engine & Localization Operational",
   "@statusRunning": {
-    "description": "Status text confirming the platform engine is running"
+    "description": "Localization for statusRunning"
   },
   "changeLanguage": "Language",
   "@changeLanguage": {
-    "description": "Label for changing language"
+    "description": "Localization for changeLanguage"
   },
   "welcomeBack": "Welcome Back",
+  "@welcomeBack": {
+    "description": "Localization for welcomeBack"
+  },
   "signIn": "SIGN IN",
+  "@signIn": {
+    "description": "Localization for signIn"
+  },
   "signUp": "SIGN UP",
+  "@signUp": {
+    "description": "Localization for signUp"
+  },
   "helloSignIn": "Hello\nSign in!",
+  "@helloSignIn": {
+    "description": "Localization for helloSignIn"
+  },
   "createYourAccount": "Create Your\nAccount",
+  "@createYourAccount": {
+    "description": "Localization for createYourAccount"
+  },
   "email": "Email",
+  "@email": {
+    "description": "Localization for email"
+  },
   "emailOrUsername": "Email or Username",
+  "@emailOrUsername": {
+    "description": "Localization for emailOrUsername"
+  },
   "phoneOrEmail": "Phone or Email",
+  "@phoneOrEmail": {
+    "description": "Localization for phoneOrEmail"
+  },
   "password": "Password",
+  "@password": {
+    "description": "Localization for password"
+  },
   "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Localization for confirmPassword"
+  },
   "fullName": "Full Name",
+  "@fullName": {
+    "description": "Localization for fullName"
+  },
   "forgotPassword": "Forgot password?",
+  "@forgotPassword": {
+    "description": "Localization for forgotPassword"
+  },
   "dontHaveAccount": "Don't have an account?",
+  "@dontHaveAccount": {
+    "description": "Localization for dontHaveAccount"
+  },
   "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": {
+    "description": "Localization for alreadyHaveAccount"
+  },
   "invalidEmail": "Please enter a valid email",
+  "@invalidEmail": {
+    "description": "Localization for invalidEmail"
+  },
   "passwordTooShort": "Password must be at least 6 characters",
+  "@passwordTooShort": {
+    "description": "Localization for passwordTooShort"
+  },
   "passwordsDoNotMatch": "Passwords do not match",
-  "nameRequired": "Full name is required"
+  "@passwordsDoNotMatch": {
+    "description": "Localization for passwordsDoNotMatch"
+  },
+  "nameRequired": "Full name is required",
+  "@nameRequired": {
+    "description": "Localization for nameRequired"
+  }
 }

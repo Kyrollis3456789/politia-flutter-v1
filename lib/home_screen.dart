@@ -3,20 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:politia/core/services/init_service.dart';
 import 'package:politia/core/services/supabase_service.dart';
 import 'package:politia/l10n/generated/app_localizations.dart';
-import 'services/locale_service.dart';
+import 'package:politia/widgets/language_picker_dialog.dart';
 
 /// Minimal dashboard screen for Politia confirming cross-platform engine, auth state, and localization.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  /// Evaluates whether the given [itemLocale] is the single active user selection.
-  bool _isSelected(Locale? itemLocale) {
-    final currentLocale = LocaleService.instance.currentLocale;
-    if (currentLocale == null && itemLocale == null) return true;
-    if (currentLocale == null || itemLocale == null) return false;
-    return currentLocale.languageCode == itemLocale.languageCode &&
-        currentLocale.countryCode == itemLocale.countryCode;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,69 +20,13 @@ class HomeScreen extends StatelessWidget {
         title: Text(l10n.appTitle),
         centerTitle: true,
         actions: [
-          // Language Switcher Menu
-          PopupMenuButton<Locale?>(
-            icon: const Icon(Icons.language),
+          // Language Switcher Modal Trigger
+          IconButton(
+            icon: const Icon(Icons.language_rounded),
             tooltip: l10n.changeLanguage,
-            initialValue: LocaleService.instance.currentLocale,
-            onSelected: (Locale? locale) {
-              LocaleService.instance.setLocale(locale);
+            onPressed: () {
+              LanguageSelectionSheet.show(context);
             },
-            itemBuilder: (BuildContext context) => [
-              // System Default
-              _buildMenuItem(
-                null,
-                'إعدادات النظام / System Default',
-              ),
-
-              // English Variants
-              _buildMenuItem(
-                const Locale('en'),
-                'English (Base)',
-              ),
-              _buildMenuItem(
-                const Locale('en', 'US'),
-                'English (US)',
-              ),
-              _buildMenuItem(
-                const Locale('en', 'GB'),
-                'English (UK)',
-              ),
-
-              // Arabic Variants
-              _buildMenuItem(
-                const Locale('ar'),
-                'العربية (عام)',
-              ),
-              _buildMenuItem(
-                const Locale('ar', 'EG'),
-                'العربية (مصر)',
-              ),
-              _buildMenuItem(
-                const Locale('ar', 'SA'),
-                'العربية (السعودية)',
-              ),
-
-              // French Variants
-              _buildMenuItem(
-                const Locale('fr'),
-                'Français',
-              ),
-              _buildMenuItem(
-                const Locale('fr', 'FR'),
-                'Français (France)',
-              ),
-
-              // Coptic Variants
-              _buildMenuItem(
-                const Locale('cop'),
-                'Ϯⲁⲥⲡⲓ ⲛ̀ⲣⲉⲙⲛ̀ⲭⲏⲙⲓ',
-              ),
-              _buildMenuItem(
-                const Locale('cop', 'EG'),
-                'Ϯⲁⲥⲡⲓ ⲛ̀ⲣⲉⲙⲛ̀ⲭⲏⲙⲓ (Ⲭⲏⲙⲓ)',
-              ),
-            ],
           ),
 
           // Logout Action
@@ -199,36 +134,6 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  PopupMenuItem<Locale?> _buildMenuItem(
-    Locale? locale,
-    String label,
-  ) {
-    final active = _isSelected(locale);
-
-    return PopupMenuItem<Locale?>(
-      value: locale,
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontWeight: active ? FontWeight.bold : FontWeight.normal,
-                color: active ? const Color(0xFFB45309) : null,
-              ),
-            ),
-          ),
-          if (active)
-            const Icon(
-              Icons.check,
-              size: 18,
-              color: Color(0xFFB45309),
-            ),
-        ],
       ),
     );
   }

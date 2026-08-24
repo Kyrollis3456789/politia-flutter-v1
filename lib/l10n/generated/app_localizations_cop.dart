@@ -83,10 +83,10 @@ class AppLocalizationsCopEg extends AppLocalizationsCop {
   String get appTitle => 'Politia';
 
   @override
-  String get welcomeMessage => 'Ⲛⲟϥⲣⲓ ϧⲉⲛ Politia (Ⲭⲏⲙⲓ)';
+  String get welcomeMessage => 'Ⲛⲟϥⲣⲓ ϧⲉⲛ Politia';
 
   @override
-  String get statusRunning => 'Platform Engine Operational (Ⲭⲏⲙⲓ)';
+  String get statusRunning => 'Platform Engine Operational';
 
   @override
   String get changeLanguage => 'Ϯⲁⲥⲡⲓ';
