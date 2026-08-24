@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../core/services/init_service.dart';
 import '../../widgets/politia_branded_background.dart';
 
-/// Politia Splash Screen — Master presentation layer with refined Cinzel typography,
-/// perfectly fitted ambient amber glow, responsive optical alignment, and accessible spinner.
+/// Politia Splash Screen — Soft organic breathing glow with feathered ambient aura,
+/// Cinzel typography, and responsive optical layout.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Trigger silent background bootstrap
+    // Trigger silent background bootstrap without routing away
     _runSilentBootstrap();
   }
 
@@ -35,15 +35,16 @@ class _SplashScreenState extends State<SplashScreen>
       _glowController = null;
       _glowAnimation = null;
     } else if (_glowController == null) {
+      // 2.6s organic breathing cycle (fade in & fade out in reverse)
       _glowController = AnimationController(
         vsync: this,
-        duration: const Duration(milliseconds: 2200),
+        duration: const Duration(milliseconds: 2600),
       )..repeat(reverse: true);
 
-      _glowAnimation = Tween<double>(begin: 0.45, end: 1.0).animate(
+      _glowAnimation = Tween<double>(begin: 0.25, end: 1.0).animate(
         CurvedAnimation(
           parent: _glowController!,
-          curve: Curves.easeInOut,
+          curve: Curves.easeInOutSine,
         ),
       );
     }
@@ -112,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen>
               logoSize = 192.0;
             }
 
-            // Responsive typography (scaled down on mobile to prevent early break)
+            // Responsive typography (scaled smoothly on mobile)
             final double titleFontSize;
             final double sloganFontSize;
             final double sloganLetterSpacing;
@@ -149,7 +150,7 @@ class _SplashScreenState extends State<SplashScreen>
                 : const Color(0xFF92400E).withValues(alpha: 0.20);
 
             return Align(
-              alignment: const Alignment(0, -0.10), // Direct optical centering: 10% above mathematical center
+              alignment: const Alignment(0, -0.10), // Optical centering: 10% above mathematical center
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 480.0),
                 child: Padding(
@@ -158,13 +159,13 @@ class _SplashScreenState extends State<SplashScreen>
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Logo with tightly fitted ambient glow (+5px bleed)
+                      // Constrained Logo with Softly Breathing Ambient Aura
                       SizedBox(
                         width: logoSize,
                         height: logoSize,
                         child: OverflowBox(
-                          maxWidth: logoSize + 28.0,
-                          maxHeight: logoSize + 28.0,
+                          maxWidth: logoSize * 1.8,
+                          maxHeight: logoSize * 1.8,
                           child: _buildGlowingLogo(
                             logoSize: logoSize,
                             isDark: isDark,
@@ -175,7 +176,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                       SizedBox(height: titleTopGap),
 
-                      // Brand Title — Hardcoded string with non-breaking space between Coptic and Orthodox
+                      // Brand Title — Hardcoded string with non-breaking space
                       Text(
                         'At Church - Coptic\u00A0Orthodox',
                         textAlign: TextAlign.center,
@@ -243,7 +244,7 @@ class _SplashScreenState extends State<SplashScreen>
     required bool disableAnimations,
   }) {
     if (disableAnimations || _glowAnimation == null) {
-      final staticOpacity = isDark ? 0.55 : 0.40;
+      final staticOpacity = isDark ? 0.45 : 0.28;
       return _buildGlowStack(
         logoSize: logoSize,
         glowOpacity: staticOpacity,
@@ -255,9 +256,10 @@ class _SplashScreenState extends State<SplashScreen>
       animation: _glowAnimation!,
       builder: (context, _) {
         final animatedVal = _glowAnimation!.value;
+        // Warm organic breathing opacity without harsh saturation
         final glowOpacity = isDark
-            ? animatedVal * 0.72
-            : animatedVal * 0.62;
+            ? animatedVal * 0.60
+            : animatedVal * 0.35;
 
         return _buildGlowStack(
           logoSize: logoSize,
@@ -273,36 +275,35 @@ class _SplashScreenState extends State<SplashScreen>
     required double glowOpacity,
     required bool isDark,
   }) {
-    // Exact fitted glow diameter with a tight +5px perimeter margin
-    final glowDiameter = logoSize + 10.0;
+    // Soft, feather-blended ambient glow diameter (1.6x logo diameter)
+    final glowDiameter = logoSize * 1.6;
 
     return Stack(
       alignment: Alignment.center,
       children: [
-        // Glow layer — Tightly hugs the logo perimeter (+5px margin)
+        // Glow layer — Feathered RadialGradient with seamless Gaussian falloff and no visible hard edge
         Container(
           width: glowDiameter,
           height: glowDiameter,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xFFB45309).withValues(alpha: glowOpacity.clamp(0.0, 1.0)),
-                blurRadius: 16.0,
-                spreadRadius: 3.0,
-              ),
-            ],
             gradient: RadialGradient(
               colors: [
-                const Color(0xFFB45309).withValues(alpha: glowOpacity.clamp(0.0, 1.0)),
+                // Soft warm amber core
+                const Color(0xFFD97706).withValues(alpha: glowOpacity.clamp(0.0, 1.0)),
+                // Smooth intermediate falloff
+                const Color(0xFFD97706).withValues(alpha: (glowOpacity * 0.50).clamp(0.0, 1.0)),
+                // Gentle ambient tail
+                const Color(0xFFB45309).withValues(alpha: (glowOpacity * 0.15).clamp(0.0, 1.0)),
+                // Complete zero-alpha blend into background
                 const Color(0xFFB45309).withValues(alpha: 0.0),
               ],
-              stops: const [0.70, 1.0],
+              stops: const [0.0, 0.40, 0.70, 1.0],
             ),
           ),
         ),
 
-        // Logo image — ON TOP of glow
+        // Logo image — ON TOP of ambient breathing glow
         ClipOval(
           child: Image.asset(
             'assets/images/logo.webp',
