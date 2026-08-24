@@ -3,7 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:politia/core/services/supabase_service.dart';
 import 'package:politia/features/splash/splash_screen.dart';
 import 'package:politia/l10n/generated/app_localizations.dart';
-import 'home_screen.dart';
 import 'services/locale_service.dart';
 
 void main() async {
@@ -72,13 +71,8 @@ class PolitiaApp extends StatelessWidget {
             return LocaleService.instance.resolveLocale(deviceLocale, supportedLocales);
           },
 
-          // Route Configuration
-          initialRoute: '/',
-          routes: {
-            '/': (context) => const SplashScreen(),
-            '/dashboard': (context) => const HomeScreen(),
-            '/login': (context) => const HomeScreen(),
-          },
+          // Persistent entry point
+          home: const SplashScreen(),
         );
       },
     );

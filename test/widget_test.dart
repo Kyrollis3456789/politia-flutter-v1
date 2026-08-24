@@ -8,15 +8,11 @@ void main() {
     await tester.pumpWidget(const PolitiaApp());
     await tester.pump();
 
-    // Verify splash elements
+    // Verify persistent splash elements
     expect(find.text('At Church - Coptic Orthodox'), findsOneWidget);
+    expect(find.byType(SplashScreen), findsOneWidget);
 
-    // Tap splash screen to trigger exit transition
-    await tester.tap(find.byType(SplashScreen));
-    await tester.pump(const Duration(milliseconds: 900));
-    await tester.pump(const Duration(milliseconds: 100));
-
-    // Drain pending initialization timer
+    // Drain background initialization timer
     await tester.pump(const Duration(seconds: 5));
   });
 }
