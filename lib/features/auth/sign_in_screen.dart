@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:politia/core/services/init_service.dart';
 import 'package:politia/core/services/supabase_service.dart';
 import 'package:politia/l10n/generated/app_localizations.dart';
 import 'package:politia/widgets/auth_language_picker.dart';
@@ -40,13 +43,23 @@ class _SignInScreenState extends State<SignInScreen> {
       final email = _emailController.text.trim();
       final password = _passwordController.text.trim();
 
-      await SupabaseService.instance.signInWithPassword(
+      final response = await SupabaseService.instance.signInWithPassword(
         email: email,
         password: password,
       );
 
+      if (response.user != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(InitializationService.prefKeyUuid, response.user!.id);
+      }
+
       if (!mounted) return;
       Navigator.of(context).pushReplacementNamed('/dashboard');
+    } on AuthException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _errorMessage = e.message;
+      });
     } catch (e) {
       if (!mounted) return;
       setState(() {
@@ -281,6 +294,8 @@ class _SignInScreenState extends State<SignInScreen> {
             controller: _passwordController,
             hintText: '••••••••••',
             isPassword: true,
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (_) => _handleSignIn(),
             validator: (value) {
               if (value == null || value.length < 6) {
                 return l10n.passwordTooShort;

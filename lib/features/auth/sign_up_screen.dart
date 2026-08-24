@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:politia/core/services/init_service.dart';
 import 'package:politia/core/services/supabase_service.dart';
 import 'package:politia/l10n/generated/app_localizations.dart';
 import 'package:politia/widgets/auth_language_picker.dart';
@@ -45,17 +48,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final password = _passwordController.text.trim();
       final fullName = _nameController.text.trim();
 
-      await SupabaseService.instance.signUp(
+      final response = await SupabaseService.instance.signUp(
         email: email,
         password: password,
         data: {'full_name': fullName},
       );
+
+      if (response.user != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(InitializationService.prefKeyUuid, response.user!.id);
+      }
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Account created successfully!')),
       );
       Navigator.of(context).pushReplacementNamed('/dashboard');
+    } on AuthException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _errorMessage = e.message;
+      });
     } catch (e) {
       if (!mounted) return;
       setState(() {
