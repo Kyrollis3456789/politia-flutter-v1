@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:politia/core/services/supabase_service.dart';
+import 'package:politia/features/auth/auth_welcome_screen.dart';
+import 'package:politia/features/auth/sign_in_screen.dart';
+import 'package:politia/features/auth/sign_up_screen.dart';
 import 'package:politia/features/splash/splash_screen.dart';
+import 'package:politia/home_screen.dart';
 import 'package:politia/l10n/generated/app_localizations.dart';
 import 'services/locale_service.dart';
 
@@ -53,12 +57,12 @@ class PolitiaApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             useMaterial3: true,
-            colorSchemeSeed: Colors.blueAccent,
+            colorSchemeSeed: const Color(0xFFB45309),
             brightness: Brightness.light,
           ),
           darkTheme: ThemeData(
             useMaterial3: true,
-            colorSchemeSeed: Colors.blueAccent,
+            colorSchemeSeed: const Color(0xFFB45309),
             brightness: Brightness.dark,
           ),
           themeMode: ThemeMode.system,
@@ -71,8 +75,15 @@ class PolitiaApp extends StatelessWidget {
             return LocaleService.instance.resolveLocale(deviceLocale, supportedLocales);
           },
 
-          // Persistent entry point
-          home: const SplashScreen(),
+          // Route Configuration
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const SplashScreen(),
+            '/welcome': (context) => const AuthWelcomeScreen(),
+            '/login': (context) => const SignInScreen(),
+            '/signup': (context) => const SignUpScreen(),
+            '/dashboard': (context) => const HomeScreen(),
+          },
         );
       },
     );

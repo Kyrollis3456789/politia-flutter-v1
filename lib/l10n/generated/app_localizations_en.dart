@@ -19,6 +19,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get changeLanguage => 'Language';
+
+  @override
+  String get welcomeBack => 'Welcome Back';
+
+  @override
+  String get signIn => 'SIGN IN';
+
+  @override
+  String get signUp => 'SIGN UP';
+
+  @override
+  String get helloSignIn => 'Hello\nSign in!';
+
+  @override
+  String get createYourAccount => 'Create Your\nAccount';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get emailOrUsername => 'Email or Username';
+
+  @override
+  String get phoneOrEmail => 'Phone or Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get fullName => 'Full Name';
+
+  @override
+  String get forgotPassword => 'Forgot password?';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get invalidEmail => 'Please enter a valid email';
+
+  @override
+  String get passwordTooShort => 'Password must be at least 6 characters';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get nameRequired => 'Full name is required';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -32,10 +86,64 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get welcomeMessage => 'Welcome to Politia (UK)';
 
   @override
-  String get statusRunning => 'Platform Engine & Localization Operational';
+  String get statusRunning => 'Platform Engine Operational (UK)';
 
   @override
   String get changeLanguage => 'Language';
+
+  @override
+  String get welcomeBack => 'Welcome Back';
+
+  @override
+  String get signIn => 'SIGN IN';
+
+  @override
+  String get signUp => 'SIGN UP';
+
+  @override
+  String get helloSignIn => 'Hello\nSign in!';
+
+  @override
+  String get createYourAccount => 'Create Your\nAccount';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get emailOrUsername => 'Email or Username';
+
+  @override
+  String get phoneOrEmail => 'Phone or Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get fullName => 'Full Name';
+
+  @override
+  String get forgotPassword => 'Forgot password?';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get invalidEmail => 'Please enter a valid email';
+
+  @override
+  String get passwordTooShort => 'Password must be at least 6 characters';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get nameRequired => 'Full name is required';
 }
 
 /// The translations for English, as used in the United States (`en_US`).
@@ -49,8 +157,62 @@ class AppLocalizationsEnUs extends AppLocalizationsEn {
   String get welcomeMessage => 'Welcome to Politia (US)';
 
   @override
-  String get statusRunning => 'Platform Engine & Localization Operational';
+  String get statusRunning => 'Platform Engine Operational (US)';
 
   @override
   String get changeLanguage => 'Language';
+
+  @override
+  String get welcomeBack => 'Welcome Back';
+
+  @override
+  String get signIn => 'SIGN IN';
+
+  @override
+  String get signUp => 'SIGN UP';
+
+  @override
+  String get helloSignIn => 'Hello\nSign in!';
+
+  @override
+  String get createYourAccount => 'Create Your\nAccount';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get emailOrUsername => 'Email or Username';
+
+  @override
+  String get phoneOrEmail => 'Phone or Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get fullName => 'Full Name';
+
+  @override
+  String get forgotPassword => 'Forgot password?';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get invalidEmail => 'Please enter a valid email';
+
+  @override
+  String get passwordTooShort => 'Password must be at least 6 characters';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get nameRequired => 'Full name is required';
 }

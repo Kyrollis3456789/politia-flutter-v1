@@ -1,7 +1,25 @@
 {
   "@@locale": "ar_SA",
   "appTitle": "بوليتيا",
-  "welcomeMessage": "مرحباً بكم في بوليتيا (السعودية)",
-  "statusRunning": "محرك المنصة والترجمة يعملان بنجاح",
-  "changeLanguage": "اللغة"
+  "welcomeMessage": "مرحبًا بك في بوليتيا (السعودية)",
+  "statusRunning": "محرك المنصة يعمل بنجاح (السعودية)",
+  "changeLanguage": "اللغة",
+  "welcomeBack": "مرحبًا بك مجددًا",
+  "signIn": "تسجيل الدخول",
+  "signUp": "إنشاء حساب",
+  "helloSignIn": "أهلاً بك\nسجل الدخول!",
+  "createYourAccount": "أنشئ\nحسابك الجديد",
+  "email": "البريد الإلكتروني",
+  "emailOrUsername": "البريد الإلكتروني أو اسم المستخدم",
+  "phoneOrEmail": "رقم الجوال أو البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "fullName": "الاسم الكامل",
+  "forgotPassword": "هل نسيت كلمة المرور؟",
+  "dontHaveAccount": "ليس لديك حساب؟",
+  "alreadyHaveAccount": "لديك حساب بالفعل؟",
+  "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح",
+  "passwordTooShort": "كلمة المرور يجب أن لا تقل عن 6 أحرف",
+  "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+  "nameRequired": "الاسم الكامل مطلوب"
 }
