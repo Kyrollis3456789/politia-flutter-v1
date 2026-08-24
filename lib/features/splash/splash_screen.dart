@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../core/services/init_service.dart';
 import '../../widgets/politia_branded_background.dart';
 
-/// Politia Splash Screen — Exact presentation layer with constrained logo OverflowBox
-/// and optically centered Alignment(0, -0.10).
+/// Politia Splash Screen — Refined presentation layer with tightly fitted ambient glow
+/// matching the logo size (+5px margin) and optical centering.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -158,13 +158,13 @@ class _SplashScreenState extends State<SplashScreen>
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Constrained Logo with Overflowing Ambient Glow
+                      // Logo with tightly matched ambient glow (+5px bleed)
                       SizedBox(
                         width: logoSize,
                         height: logoSize,
                         child: OverflowBox(
-                          maxWidth: logoSize * 2.2,
-                          maxHeight: logoSize * 2.2,
+                          maxWidth: logoSize + 24.0,
+                          maxHeight: logoSize + 24.0,
                           child: _buildGlowingLogo(
                             logoSize: logoSize,
                             isDark: isDark,
@@ -255,8 +255,6 @@ class _SplashScreenState extends State<SplashScreen>
       animation: _glowAnimation!,
       builder: (context, _) {
         final animatedVal = _glowAnimation!.value;
-        // Peak opacity at 1.0: 0.72 (dark) / 0.62 (light)
-        // Trough opacity at 0.45: 0.32 (dark) / 0.28 (light)
         final glowOpacity = isDark
             ? animatedVal * 0.72
             : animatedVal * 0.62;
@@ -275,21 +273,31 @@ class _SplashScreenState extends State<SplashScreen>
     required double glowOpacity,
     required bool isDark,
   }) {
+    // Exact tight glow diameter: logoSize + 10 (extends +5px margin around logo perimeter)
+    final glowDiameter = logoSize + 10.0;
+
     return Stack(
       alignment: Alignment.center,
       children: [
-        // Glow layer — BEHIND the logo (2.2x logo diameter)
+        // Glow layer — Tightly hugs the logo perimeter (+5px margin)
         Container(
-          width: logoSize * 2.2,
-          height: logoSize * 2.2,
+          width: glowDiameter,
+          height: glowDiameter,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFB45309).withValues(alpha: glowOpacity.clamp(0.0, 1.0)),
+                blurRadius: 12.0,
+                spreadRadius: 3.0,
+              ),
+            ],
             gradient: RadialGradient(
               colors: [
                 const Color(0xFFB45309).withValues(alpha: glowOpacity.clamp(0.0, 1.0)),
                 const Color(0xFFB45309).withValues(alpha: 0.0),
               ],
-              stops: const [0.0, 1.0],
+              stops: const [0.75, 1.0],
             ),
           ),
         ),
