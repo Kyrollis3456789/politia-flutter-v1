@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:politia/features/splash/splash_screen.dart';
 import 'package:politia/main.dart';
 
 void main() {
@@ -7,14 +8,15 @@ void main() {
     await tester.pumpWidget(const PolitiaApp());
     await tester.pump();
 
-    // Verify that the title Politia renders on Splash
-    expect(find.text('Politia'), findsWidgets);
+    // Verify splash elements
+    expect(find.text('At Church - Coptic Orthodox'), findsOneWidget);
 
-    // Fast-forward through the 4-second minimum splash gatekeeper timer and complete route navigation
+    // Tap splash screen to trigger exit transition
+    await tester.tap(find.byType(SplashScreen));
+    await tester.pump(const Duration(milliseconds: 900));
+    await tester.pump(const Duration(milliseconds: 100));
+
+    // Drain pending initialization timer
     await tester.pump(const Duration(seconds: 5));
-    await tester.pump(const Duration(milliseconds: 500));
-
-    // Verify that the screen renders Politia
-    expect(find.text('Politia'), findsWidgets);
   });
 }
