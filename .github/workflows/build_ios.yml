@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java & Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -24,23 +24,20 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Install CocoaPods dependencies
-        run: |
-          cd ios
-          pod install --repo-update
-          cd ..
+      - name: Analyze code
+        run: flutter analyze
 
-      - name: Build iOS App (No Codesign)
-        run: flutter build ios --release --no-codesign
+      - name: Build iOS (No Codesign)
+        run: flutter build ios --release --no-codesign --config-only || flutter build ios --release --no-codesign
 
-      - name: Package .app into .ipa
+      - name: Package Payload to .IPA
         run: |
           mkdir -p Payload
           cp -r build/ios/iphoneos/Runner.app Payload/
           zip -r -9 PolitiaApp-unsigned.ipa Payload
           rm -rf Payload
 
-      - name: Upload iOS Artifact
+      - name: Upload iOS Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: PolitiaApp-iOS-Build
