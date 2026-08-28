@@ -221,12 +221,12 @@ class _SplashScreenState extends State<SplashScreen>
 
                   SizedBox(height: (vh * 0.024).clamp(16.0, 24.0)),
 
-                  // 2. MAIN APP TITLE: "POLITIA – COPTIC ORTHODOX"
+                  // 2. MAIN APP TITLE: "POLITIA" / "COPTIC ORTHODOX"
                   _buildAnimatedEntry(
                     animation: _titleEntryAnimation,
                     disableAnimations: disableAnimations,
                     child: Text(
-                      'POLITIA – COPTIC\nORTHODOX',
+                      'POLITIA\nCOPTIC ORTHODOX',
                       textAlign: TextAlign.center,
                       softWrap: true,
                       style: TextStyle(
