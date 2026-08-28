@@ -16,6 +16,11 @@ dependencies:
   supabase_flutter: ^2.8.0
   shared_preferences: ^2.3.0
   flutter_dotenv: ^5.2.1
+  image_picker: ^1.2.3
+  image_cropper: ^12.2.1
+  connectivity_plus: ^7.3.1
+  lottie: ^3.5.1
+  permission_handler: ^13.0.1
 
 dev_dependencies:
   flutter_test:
@@ -27,6 +32,7 @@ flutter:
   generate: true
   assets:
     - assets/images/
+    - assets/animations/
     - .env
 
   fonts:

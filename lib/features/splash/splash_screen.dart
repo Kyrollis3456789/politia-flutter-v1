@@ -98,48 +98,52 @@ class _SplashScreenState extends State<SplashScreen>
               // Responsive vertical gaps
               final double titleTopGap;
               final double titleToSloganGap;
-              final double sloganToSpinnerGap;
+              final double sloganToVerseGap;
+              final double verseToSpinnerGap;
               if (vw < 440) {
-                titleTopGap = 20.0;
+                titleTopGap = 18.0;
                 titleToSloganGap = 6.0;
-                sloganToSpinnerGap = 28.0;
+                sloganToVerseGap = 12.0;
+                verseToSpinnerGap = 24.0;
               } else if (vw <= 900) {
-                titleTopGap = 24.0;
+                titleTopGap = 22.0;
                 titleToSloganGap = 8.0;
-                sloganToSpinnerGap = 34.0;
+                sloganToVerseGap = 14.0;
+                verseToSpinnerGap = 28.0;
               } else {
-                titleTopGap = 28.0;
-                titleToSloganGap = 10.0;
-                sloganToSpinnerGap = 40.0;
+                titleTopGap = 26.0;
+                titleToSloganGap = 8.0;
+                sloganToVerseGap = 16.0;
+                verseToSpinnerGap = 32.0;
               }
 
               // Responsive logo sizing
               final double logoSize;
               if (vw < 440) {
-                logoSize = (vw * 0.36).clamp(120.0, 152.0);
+                logoSize = (vw * 0.34).clamp(112.0, 144.0);
               } else if (vw <= 900) {
-                logoSize = (vw * 0.20).clamp(148.0, 176.0);
+                logoSize = (vw * 0.20).clamp(144.0, 168.0);
               } else {
-                logoSize = 192.0;
+                logoSize = 180.0;
               }
 
               // Responsive typography (scaled smoothly on mobile)
               final double titleFontSize;
               final double sloganFontSize;
-              final double sloganLetterSpacing;
+              final double verseFontSize;
 
               if (vw < 440) {
-                titleFontSize = (vw * 0.055).clamp(16.0, 20.0);
-                sloganFontSize = (vw * 0.026).clamp(8.5, 10.0);
-                sloganLetterSpacing = (vw * 0.006).clamp(1.6, 2.8);
+                titleFontSize = (vw * 0.068).clamp(20.0, 30.0);
+                sloganFontSize = (vw * 0.028).clamp(10.0, 12.5);
+                verseFontSize = (vw * 0.034).clamp(12.5, 14.5);
               } else if (vw <= 900) {
-                titleFontSize = (vw * 0.050).clamp(22.0, 28.0);
-                sloganFontSize = (vw * 0.022).clamp(9.0, 10.5);
-                sloganLetterSpacing = (vw * 0.006).clamp(1.6, 2.8);
+                titleFontSize = (vw * 0.055).clamp(24.0, 30.0);
+                sloganFontSize = (vw * 0.022).clamp(11.0, 12.5);
+                verseFontSize = 14.5;
               } else {
                 titleFontSize = 30.0;
-                sloganFontSize = 10.5;
-                sloganLetterSpacing = 3.2;
+                sloganFontSize = 12.5;
+                verseFontSize = 14.5;
               }
 
               // Light/Dark specific colors
@@ -148,8 +152,10 @@ class _SplashScreenState extends State<SplashScreen>
                 : const Color(0xFF1C2340);
 
               final sloganColor = isDark
-                ? const Color(0xFF9CA3AF)
-                : const Color(0xFF3D3520); // Warm dark brown for high contrast on parchment
+                ? Colors.white70
+                : const Color(0xFF3D3520).withValues(alpha: 0.85);
+
+              const verseColor = Color(0xFFE5A93C); // Warm Gold
 
               final spinnerValueColor = isDark
                 ? const Color(0xFFB45309)
@@ -160,9 +166,9 @@ class _SplashScreenState extends State<SplashScreen>
                 : const Color(0xFF92400E).withValues(alpha: 0.20);
 
               return Align(
-                alignment: const Alignment(0, -0.10), // Optical centering: 10% above mathematical center
+                alignment: const Alignment(0, -0.08), // Optical centering
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 480.0),
+                  constraints: const BoxConstraints(maxWidth: 540.0),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: responsiveHPad),
                     child: Column(
@@ -186,19 +192,19 @@ class _SplashScreenState extends State<SplashScreen>
 
                         SizedBox(height: titleTopGap),
 
-                        // Brand Title — Hardcoded string with non-breaking space
+                        // Brand Title
                         Text(
-                          'At Church - Coptic\u00A0Orthodox',
+                          'AT CHURCH - COPTIC ORTHODOX',
                           textAlign: TextAlign.center,
                           softWrap: true,
                           overflow: TextOverflow.visible,
                           style: TextStyle(
                             fontFamily: 'Cinzel',
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.bold,
                             fontSize: titleFontSize,
                             color: titleColor,
-                            letterSpacing: 0.5,
-                            height: 1.3,
+                            letterSpacing: 2.0,
+                            height: 1.25,
                           ),
                         ),
 
@@ -215,12 +221,30 @@ class _SplashScreenState extends State<SplashScreen>
                             fontWeight: FontWeight.w400,
                             fontSize: sloganFontSize,
                             color: sloganColor,
-                            letterSpacing: sloganLetterSpacing,
-                            height: 1.6,
+                            letterSpacing: 2.5,
+                            height: 1.5,
                           ),
                         ),
 
-                        SizedBox(height: sloganToSpinnerGap),
+                        SizedBox(height: sloganToVerseGap),
+
+                        // Biblical Verse
+                        Text(
+                          '«أَنْتُمْ نُورُ الْعَالَمِ. لاَ يُمْكِنُ أَنْ تُخْفَى مَدِينَةٌ مَوْضُوعَةٌ عَلَى جَبَل» (متى 5: 14)',
+                          textAlign: TextAlign.center,
+                          textDirection: TextDirection.rtl,
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                          style: TextStyle(
+                            fontSize: verseFontSize,
+                            fontWeight: FontWeight.w600,
+                            color: verseColor,
+                            height: 1.5,
+                            letterSpacing: 0.2,
+                          ),
+                        ),
+
+                        SizedBox(height: verseToSpinnerGap),
 
                         // Loading Indicator
                         Semantics(

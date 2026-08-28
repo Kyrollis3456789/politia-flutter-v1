@@ -1,0 +1,45 @@
+name: Build iOS App
+
+on:
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+  push:
+    branches:
+      - main
+
+jobs:
+  build-ios:
+    name: Build iOS Package
+    runs-on: macos-14 # Uses Apple Silicon (M1/M2) runners for fast build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java / Flutter dependencies
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify Code Health
+        run: flutter analyze
+
+      - name: Build iOS Application (No Codesign)
+        run: flutter build ios --release --no-codesign
+
+      - name: Package Payload to .IPA
+        run: |
+          mkdir -p Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r -9 PolitiaApp-unsigned.ipa Payload
+          rm -rf Payload
+
+      - name: Upload iOS Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PolitiaApp-iOS-Build
+          path: PolitiaApp-unsigned.ipa
+          retention-days: 7

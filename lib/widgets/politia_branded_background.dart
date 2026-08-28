@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:politia/core/theme/app_colors_extension.dart';
 
-/// Wraps screens that use the shared Politia branded background texture with the legacy Next.js gradient overlay.
+/// Wraps screens with the original Politia background texture and a clean,
+/// theme-sensitive gradient overlay that adapts to Light and Dark modes.
 class PolitiaBrandedBackground extends StatelessWidget {
   const PolitiaBrandedBackground({
     super.key,
@@ -13,33 +15,28 @@ class PolitiaBrandedBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.appColors;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Legacy Next.js CSS overlay variables
-    final overlayColors = isDark
-        ? const [
-            Color(0xE6090D16), // rgba(9, 13, 22, 0.90)
-            Color(0xF7090D16), // rgba(9, 13, 22, 0.97)
-          ]
-        : const [
-            Color(0xD9F8FAFC), // rgba(248, 250, 252, 0.85)
-            Color(0xF2F8FAFC), // rgba(248, 250, 252, 0.95)
-          ];
+    final overlayColors = [
+      colors.background.withValues(alpha: isDark ? 0.90 : 0.82),
+      colors.background.withValues(alpha: isDark ? 0.98 : 0.95),
+    ];
 
     return Stack(
       fit: StackFit.expand,
       children: [
-        // Layer 1: Background texture image
+        // Layer 1: Clean background texture image
         Image.asset(
           backgroundAsset,
           fit: BoxFit.cover,
           filterQuality: FilterQuality.medium,
           errorBuilder: (_, __, ___) => Container(
-            color: isDark ? const Color(0xFF090D16) : const Color(0xFFF8FAFC),
+            color: colors.background,
           ),
         ),
 
-        // Layer 2: Theme-sensitive overlay gradient
+        // Layer 2: Clean semantic gradient overlay
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
