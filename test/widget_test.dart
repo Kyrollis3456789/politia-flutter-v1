@@ -9,7 +9,8 @@ void main() {
     await tester.pump();
 
     // Verify persistent splash elements
-    expect(find.text('POLITIA\nCOPTIC ORTHODOX'), findsOneWidget);
+    expect(find.text('POLITIA'), findsOneWidget);
+    expect(find.text('COPTIC ORTHODOX'), findsOneWidget);
     expect(find.byType(SplashScreen), findsOneWidget);
 
     // Drain background initialization timer

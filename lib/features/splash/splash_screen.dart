@@ -186,7 +186,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Responsive dimensions
     final logoSize = (vw * 0.28).clamp(112.0, 134.0);
-    final titleFontSize = (vw * 0.056).clamp(19.5, 23.5);
     final subtitleFontSize = (vw * 0.026).clamp(10.5, 11.8);
 
     return Column(
@@ -221,31 +220,57 @@ class _SplashScreenState extends State<SplashScreen>
 
                   SizedBox(height: (vh * 0.024).clamp(16.0, 24.0)),
 
-                  // 2. MAIN APP TITLE: "POLITIA" / "COPTIC ORTHODOX"
+                  // 2. MAIN APP TITLE: "POLITIA" (Primary 36 bold) / "COPTIC ORTHODOX" (Descriptor 20 w400)
                   _buildAnimatedEntry(
                     animation: _titleEntryAnimation,
                     disableAnimations: disableAnimations,
-                    child: Text(
-                      'POLITIA\nCOPTIC ORTHODOX',
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontFamily: 'Cinzel',
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleFontSize,
-                        color: navyTitleColor,
-                        letterSpacing: 2.0,
-                        height: 1.28,
-                        shadows: isDark
-                            ? [
-                                Shadow(
-                                  color: Colors.black.withValues(alpha: 0.60),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ]
-                            : null,
-                      ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'POLITIA',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Cinzel',
+                            fontWeight: FontWeight.bold,
+                            fontSize: (vw * 0.088).clamp(30.0, 36.0),
+                            color: navyTitleColor,
+                            letterSpacing: 2.5,
+                            height: 1.15,
+                            shadows: isDark
+                                ? [
+                                    Shadow(
+                                      color: Colors.black.withValues(alpha: 0.60),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ]
+                                : null,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          'COPTIC ORTHODOX',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Cinzel',
+                            fontWeight: FontWeight.w400,
+                            fontSize: (vw * 0.048).clamp(16.5, 20.0),
+                            color: navyTitleColor,
+                            letterSpacing: 2.0,
+                            height: 1.15,
+                            shadows: isDark
+                                ? [
+                                    Shadow(
+                                      color: Colors.black.withValues(alpha: 0.50),
+                                      blurRadius: 6,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ]
+                                : null,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
