@@ -607,7 +607,7 @@ class _SplashScreenState extends State<SplashScreen>
     return Stack(
       alignment: Alignment.center,
       children: [
-        // Feathered Gaussian radial aura
+        // Feathered Gaussian radial aura (natural soft glow without circular outline)
         Container(
           width: glowDiameter,
           height: glowDiameter,
@@ -625,41 +625,24 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         ),
 
-        // Dark Mode only: subtle gold hairline rim and elevated navy contrast circle
-        if (isDark)
-          Container(
-            width: logoSize + 2.0,
-            height: logoSize + 2.0,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: const Color(0xFF141C30),
-              border: Border.all(
-                color: const Color(0xFFE5B869).withValues(alpha: 0.50),
-                width: 1.0,
-              ),
-            ),
-          ),
-
-        // Logo Image
-        ClipOval(
-          child: Image.asset(
-            'assets/images/logo.webp',
+        // Original Brand Logo (Unframed and undistorted)
+        Image.asset(
+          'assets/images/logo.webp',
+          width: logoSize,
+          height: logoSize,
+          fit: BoxFit.contain,
+          filterQuality: FilterQuality.high,
+          errorBuilder: (_, __, ___) => Container(
             width: logoSize,
             height: logoSize,
-            fit: BoxFit.cover,
-            filterQuality: FilterQuality.high,
-            errorBuilder: (_, __, ___) => Container(
-              width: logoSize,
-              height: logoSize,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFFB45309),
-              ),
-              child: const Icon(
-                Icons.church_rounded,
-                color: Colors.white,
-                size: 56,
-              ),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xFFB45309),
+            ),
+            child: const Icon(
+              Icons.church_rounded,
+              color: Colors.white,
+              size: 56,
             ),
           ),
         ),
