@@ -279,7 +279,7 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                   ),
 
-                  SizedBox(height: (vh * 0.038).clamp(24.0, 36.0)),
+                  SizedBox(height: (vh * 0.028).clamp(18.0, 26.0)),
 
                   // 5. SCRIPTURE CONTAINER CARD
                   _buildAnimatedEntry(
@@ -299,7 +299,7 @@ class _SplashScreenState extends State<SplashScreen>
 
         // 6. CONTINUOUS ANIMATED THREE-DOT LOADER (1 -> 2 -> 3 -> 2 -> 1)
         Padding(
-          padding: const EdgeInsets.only(top: 12.0, bottom: 18.0),
+          padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
           child: _buildAnimatedEntry(
             animation: _footerEntryAnimation,
             disableAnimations: disableAnimations,
@@ -325,12 +325,12 @@ class _SplashScreenState extends State<SplashScreen>
         children: [
           Expanded(
             child: Container(
-              height: 1.0,
+              height: 1.2,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     goldAccent.withValues(alpha: 0.0),
-                    goldAccent.withValues(alpha: 0.65),
+                    goldAccent.withValues(alpha: 0.85),
                   ],
                 ),
               ),
@@ -340,17 +340,17 @@ class _SplashScreenState extends State<SplashScreen>
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Icon(
               Icons.add_rounded,
-              size: 15,
+              size: 16,
               color: goldAccent,
             ),
           ),
           Expanded(
             child: Container(
-              height: 1.0,
+              height: 1.2,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    goldAccent.withValues(alpha: 0.65),
+                    goldAccent.withValues(alpha: 0.85),
                     goldAccent.withValues(alpha: 0.0),
                   ],
                 ),
@@ -624,6 +624,21 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           ),
         ),
+
+        // Dark Mode only: subtle gold hairline rim and elevated navy contrast circle
+        if (isDark)
+          Container(
+            width: logoSize + 2.0,
+            height: logoSize + 2.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFF141C30),
+              border: Border.all(
+                color: const Color(0xFFE5B869).withValues(alpha: 0.50),
+                width: 1.0,
+              ),
+            ),
+          ),
 
         // Logo Image
         ClipOval(

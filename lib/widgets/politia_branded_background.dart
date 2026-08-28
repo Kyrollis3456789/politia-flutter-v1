@@ -19,8 +19,8 @@ class PolitiaBrandedBackground extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final overlayColors = [
-      colors.background.withValues(alpha: isDark ? 0.90 : 0.82),
-      colors.background.withValues(alpha: isDark ? 0.98 : 0.95),
+      colors.background.withValues(alpha: isDark ? 0.90 : 0.89),
+      colors.background.withValues(alpha: isDark ? 0.98 : 0.96),
     ];
 
     return Stack(
