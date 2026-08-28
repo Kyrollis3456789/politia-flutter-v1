@@ -4,9 +4,9 @@ import '../../core/services/init_service.dart';
 import '../../widgets/politia_branded_background.dart';
 
 /// Production-ready Politia Splash / Onboarding Screen.
-/// Features seamless edge-to-edge status bar handling, balanced typography hierarchy,
-/// golden Coptic cross divider, elevated scripture card, 3-dot pagination indicator,
-/// and smooth staggered entry animations.
+/// Features seamless edge-to-edge status bar handling, refined Coptic typography hierarchy,
+/// golden Coptic cross divider, elevated scripture card, continuous 1->2->3->2->1 breathing
+/// three-dot loader, and smooth staggered entry animations.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -16,9 +16,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  // Continuous Breathing Glow Controller (Logo Aura & Active Dot Glow)
+  // Continuous Breathing Glow Controller (Logo Aura)
   AnimationController? _glowController;
   Animation<double>? _glowAnimation;
+
+  // Continuous 1 -> 2 -> 3 -> 2 -> 1 Three-Dot Loader Animation Controller (1500ms cycle)
+  AnimationController? _dotsController;
 
   // Staggered Entry Animation Controller (Top-to-Bottom Sequence over 1.8s)
   AnimationController? _entryController;
@@ -32,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // 1. Initialize Continuous Subtle Breathing Glow
+    // 1. Initialize Subtle Breathing Glow (Logo Aura)
     _glowController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2400),
@@ -45,7 +48,13 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    // 2. Initialize Staggered Entry Sequence (1.8s)
+    // 2. Initialize Continuous 1->2->3->2->1 Three-Dot Loader (375ms per step, 1500ms full cycle)
+    _dotsController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat();
+
+    // 3. Initialize Staggered Entry Sequence (1.8s)
     _entryController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1800),
@@ -98,6 +107,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void dispose() {
     _glowController?.dispose();
+    _dotsController?.dispose();
     _entryController?.dispose();
     super.dispose();
   }
@@ -169,15 +179,15 @@ class _SplashScreenState extends State<SplashScreen>
     required bool isDark,
     required bool disableAnimations,
   }) {
-    // Theme Colors
+    // Theme-sensitive refined colors
     final navyTitleColor = isDark ? const Color(0xFFFFFFFF) : const Color(0xFF16203B);
     final subtitleColor = isDark ? const Color(0xFFD1D5DB) : const Color(0xFF3A3A3C);
-    const goldAccent = Color(0xFFE5B869); // Warm Gold
+    final goldAccent = isDark ? const Color(0xFFE5B869) : const Color(0xFFD4A044); // Warm Premium Gold
 
-    // Responsive element dimensions
-    final logoSize = (vw * 0.28).clamp(112.0, 136.0);
-    final titleFontSize = (vw * 0.058).clamp(20.0, 24.0);
-    final subtitleFontSize = (vw * 0.027).clamp(10.5, 12.0);
+    // Responsive dimensions
+    final logoSize = (vw * 0.28).clamp(112.0, 134.0);
+    final titleFontSize = (vw * 0.056).clamp(19.5, 23.5);
+    final subtitleFontSize = (vw * 0.026).clamp(10.5, 11.8);
 
     return Column(
       children: [
@@ -190,7 +200,7 @@ class _SplashScreenState extends State<SplashScreen>
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // 1. BRAND LOGO (Centered with ambient breathing glow)
+                  // 1. BRAND LOGO (Centered with subtle ambient breathing aura)
                   _buildAnimatedEntry(
                     animation: _logoEntryAnimation,
                     disableAnimations: disableAnimations,
@@ -198,8 +208,8 @@ class _SplashScreenState extends State<SplashScreen>
                       width: logoSize,
                       height: logoSize,
                       child: OverflowBox(
-                        maxWidth: logoSize * 1.7,
-                        maxHeight: logoSize * 1.7,
+                        maxWidth: logoSize * 1.6,
+                        maxHeight: logoSize * 1.6,
                         child: _buildGlowingLogo(
                           logoSize: logoSize,
                           isDark: isDark,
@@ -287,13 +297,13 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         ),
 
-        // 6. BOTTOM PAGINATION INDICATOR (3 Dots)
+        // 6. CONTINUOUS ANIMATED THREE-DOT LOADER (1 -> 2 -> 3 -> 2 -> 1)
         Padding(
-          padding: const EdgeInsets.only(top: 12.0, bottom: 16.0),
+          padding: const EdgeInsets.only(top: 12.0, bottom: 18.0),
           child: _buildAnimatedEntry(
             animation: _footerEntryAnimation,
             disableAnimations: disableAnimations,
-            child: _buildPaginationDots(
+            child: _buildAnimatedThreeDotLoader(
               isDark: isDark,
               goldAccent: goldAccent,
               disableAnimations: disableAnimations,
@@ -309,7 +319,7 @@ class _SplashScreenState extends State<SplashScreen>
   // =========================================================================
   Widget _buildCrossDivider(Color goldAccent) {
     return SizedBox(
-      width: 220.0,
+      width: 210.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -320,7 +330,7 @@ class _SplashScreenState extends State<SplashScreen>
                 gradient: LinearGradient(
                   colors: [
                     goldAccent.withValues(alpha: 0.0),
-                    goldAccent.withValues(alpha: 0.7),
+                    goldAccent.withValues(alpha: 0.65),
                   ],
                 ),
               ),
@@ -330,7 +340,7 @@ class _SplashScreenState extends State<SplashScreen>
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Icon(
               Icons.add_rounded,
-              size: 16,
+              size: 15,
               color: goldAccent,
             ),
           ),
@@ -340,7 +350,7 @@ class _SplashScreenState extends State<SplashScreen>
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    goldAccent.withValues(alpha: 0.7),
+                    goldAccent.withValues(alpha: 0.65),
                     goldAccent.withValues(alpha: 0.0),
                   ],
                 ),
@@ -360,17 +370,19 @@ class _SplashScreenState extends State<SplashScreen>
     required bool isDark,
     required Color goldAccent,
   }) {
+    // Subtle, distinct background tint without heavy appearance
     final cardBg = isDark
         ? const Color(0xFF1B1A17).withValues(alpha: 0.90)
-        : const Color(0xFFFAF7F0).withValues(alpha: 0.92);
+        : const Color(0xFFFBF8F2).withValues(alpha: 0.94);
 
     final cardBorder = isDark
-        ? goldAccent.withValues(alpha: 0.30)
-        : goldAccent.withValues(alpha: 0.40);
+        ? goldAccent.withValues(alpha: 0.28)
+        : goldAccent.withValues(alpha: 0.32);
 
+    // Warm, highly readable Arabic text color
     final verseTextColor = isDark
         ? const Color(0xFFF3C775)
-        : const Color(0xFF8B5E14);
+        : const Color(0xFF784E1A); // Darker warm-gold/brown tone for crisp readability
 
     final citationColor = isDark
         ? goldAccent.withValues(alpha: 0.90)
@@ -390,9 +402,9 @@ class _SplashScreenState extends State<SplashScreen>
           BoxShadow(
             color: isDark
                 ? Colors.black.withValues(alpha: 0.35)
-                : const Color(0xFF8B5E14).withValues(alpha: 0.07),
-            blurRadius: 20,
-            offset: const Offset(0, 6),
+                : const Color(0xFF784E1A).withValues(alpha: 0.05),
+            blurRadius: 18,
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -400,7 +412,7 @@ class _SplashScreenState extends State<SplashScreen>
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Arabic Verse Quote
+          // Arabic Scripture Quote
           Text(
             '«أَنْتُمْ نُورُ الْعَالَمِ. لَا يُمْكِنُ أَنْ تُخْفَى مَدِينَةٌ مَوْضُوعَةٌ عَلَى جَبَلٍ»',
             textAlign: TextAlign.center,
@@ -435,71 +447,120 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   // =========================================================================
-  // 3-DOT PAGINATION INDICATOR
+  // CONTINUOUS 1 -> 2 -> 3 -> 2 -> 1 ANIMATED THREE-DOT LOADER
   // =========================================================================
-  Widget _buildPaginationDots({
+  Widget _buildAnimatedThreeDotLoader({
     required bool isDark,
     required Color goldAccent,
     required bool disableAnimations,
   }) {
-    final inactiveDotColor = isDark
-        ? Colors.white.withValues(alpha: 0.20)
-        : const Color(0xFF16203B).withValues(alpha: 0.18);
+    final inactiveColor = isDark
+        ? Colors.white.withValues(alpha: 0.22)
+        : const Color(0xFF16203B).withValues(alpha: 0.20);
 
-    if (disableAnimations || _glowAnimation == null) {
+    if (disableAnimations || _dotsController == null) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildDot(color: inactiveDotColor, size: 7.0),
-          const SizedBox(width: 8),
-          _buildDot(color: goldAccent, size: 8.5),
-          const SizedBox(width: 8),
-          _buildDot(color: inactiveDotColor, size: 7.0),
+          _buildSingleDot(weight: 0.0, inactiveColor: inactiveColor, goldColor: goldAccent),
+          const SizedBox(width: 9),
+          _buildSingleDot(weight: 1.0, inactiveColor: inactiveColor, goldColor: goldAccent),
+          const SizedBox(width: 9),
+          _buildSingleDot(weight: 0.0, inactiveColor: inactiveColor, goldColor: goldAccent),
         ],
       );
     }
 
     return AnimatedBuilder(
-      animation: _glowAnimation!,
+      animation: _dotsController!,
       builder: (context, _) {
-        final glowVal = _glowAnimation!.value;
+        final t = _dotsController!.value; // 0.0 -> 1.0
+
+        // Calculate smooth continuous 1 -> 2 -> 3 -> 2 -> 1 active weight for each dot
+        // Phase moves over 4 segments in cycle:
+        // Segment 0 [0.00 - 0.25]: Dot 1 (1->0) to Dot 2 (0->1)
+        // Segment 1 [0.25 - 0.50]: Dot 2 (1->0) to Dot 3 (0->1)
+        // Segment 2 [0.50 - 0.75]: Dot 3 (1->0) to Dot 2 (0->1)
+        // Segment 3 [0.75 - 1.00]: Dot 2 (1->0) to Dot 1 (0->1)
+        final double phase = t * 4.0;
+        final int segment = phase.floor().clamp(0, 3);
+        final double localT = phase - segment;
+        final double smoothT = Curves.easeInOutCubic.transform(localT);
+
+        double w1 = 0.0;
+        double w2 = 0.0;
+        double w3 = 0.0;
+
+        switch (segment) {
+          case 0:
+            w1 = 1.0 - smoothT;
+            w2 = smoothT;
+            w3 = 0.0;
+            break;
+          case 1:
+            w1 = 0.0;
+            w2 = 1.0 - smoothT;
+            w3 = smoothT;
+            break;
+          case 2:
+            w1 = 0.0;
+            w2 = smoothT;
+            w3 = 1.0 - smoothT;
+            break;
+          case 3:
+            w1 = smoothT;
+            w2 = 1.0 - smoothT;
+            w3 = 0.0;
+            break;
+        }
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildDot(color: inactiveDotColor, size: 7.0),
-            const SizedBox(width: 8),
-            // Active middle dot with subtle breathing aura
-            Container(
-              width: 9.0,
-              height: 9.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: goldAccent,
-                boxShadow: [
-                  BoxShadow(
-                    color: goldAccent.withValues(alpha: 0.40 * glowVal),
-                    blurRadius: 8.0 * glowVal,
-                    spreadRadius: 1.5 * glowVal,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 8),
-            _buildDot(color: inactiveDotColor, size: 7.0),
+            _buildSingleDot(weight: w1, inactiveColor: inactiveColor, goldColor: goldAccent),
+            const SizedBox(width: 9),
+            _buildSingleDot(weight: w2, inactiveColor: inactiveColor, goldColor: goldAccent),
+            const SizedBox(width: 9),
+            _buildSingleDot(weight: w3, inactiveColor: inactiveColor, goldColor: goldAccent),
           ],
         );
       },
     );
   }
 
-  Widget _buildDot({required Color color, required double size}) {
+  Widget _buildSingleDot({
+    required double weight, // 0.0 = completely inactive, 1.0 = fully active gold
+    required Color inactiveColor,
+    required Color goldColor,
+  }) {
+    final clampedWeight = weight.clamp(0.0, 1.0);
+
+    // Smooth size interpolation: 6.5px base -> 8.8px active
+    final double size = 6.5 + (2.3 * clampedWeight);
+
+    // Color and opacity blending
+    final dotColor = Color.lerp(inactiveColor, goldColor, clampedWeight)!;
+
     return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
+      width: 14.0, // Fixed layout box prevents any horizontal jumping
+      height: 14.0,
+      alignment: Alignment.center,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: dotColor,
+          boxShadow: clampedWeight > 0.15
+              ? [
+                  BoxShadow(
+                    color: goldColor.withValues(alpha: 0.45 * clampedWeight),
+                    blurRadius: 6.0 * clampedWeight,
+                    spreadRadius: 1.0 * clampedWeight,
+                  ),
+                ]
+              : null,
+        ),
       ),
     );
   }
@@ -513,7 +574,7 @@ class _SplashScreenState extends State<SplashScreen>
     required bool disableAnimations,
   }) {
     if (disableAnimations || _glowAnimation == null) {
-      final staticOpacity = isDark ? 0.45 : 0.25;
+      final staticOpacity = isDark ? 0.38 : 0.20;
       return _buildGlowStack(
         logoSize: logoSize,
         glowOpacity: staticOpacity,
@@ -525,7 +586,7 @@ class _SplashScreenState extends State<SplashScreen>
       animation: _glowAnimation!,
       builder: (context, _) {
         final animatedVal = _glowAnimation!.value;
-        final glowOpacity = isDark ? animatedVal * 0.55 : animatedVal * 0.35;
+        final glowOpacity = isDark ? animatedVal * 0.48 : animatedVal * 0.28;
 
         return _buildGlowStack(
           logoSize: logoSize,
@@ -541,7 +602,7 @@ class _SplashScreenState extends State<SplashScreen>
     required double glowOpacity,
     required bool isDark,
   }) {
-    final glowDiameter = logoSize * 1.55;
+    final glowDiameter = logoSize * 1.50;
 
     return Stack(
       alignment: Alignment.center,
@@ -555,8 +616,8 @@ class _SplashScreenState extends State<SplashScreen>
             gradient: RadialGradient(
               colors: [
                 const Color(0xFFD97706).withValues(alpha: glowOpacity.clamp(0.0, 1.0)),
-                const Color(0xFFE5B869).withValues(alpha: (glowOpacity * 0.55).clamp(0.0, 1.0)),
-                const Color(0xFFB45309).withValues(alpha: (glowOpacity * 0.15).clamp(0.0, 1.0)),
+                const Color(0xFFE5B869).withValues(alpha: (glowOpacity * 0.50).clamp(0.0, 1.0)),
+                const Color(0xFFB45309).withValues(alpha: (glowOpacity * 0.12).clamp(0.0, 1.0)),
                 const Color(0xFFB45309).withValues(alpha: 0.0),
               ],
               stops: const [0.0, 0.35, 0.70, 1.0],
