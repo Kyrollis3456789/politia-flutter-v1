@@ -135,7 +135,8 @@ class _SplashScreenState extends State<SplashScreen>
   ) {
     // Scaled logo up by ~15–20% (142 - 168px)
     final double logoSize = (vw * 0.38).clamp(142.0, 168.0);
-    const goldAccent = Color(0xFFE5B869); // Warm Gold
+    final sloganColor = isDark ? const Color(0xFFE0E0E0) : const Color(0xFF3A3A3C);
+    final verseColor = isDark ? const Color(0xFFE5B869) : const Color(0xFF8B5E14);
 
     return Stack(
       children: [
@@ -170,7 +171,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 SizedBox(height: (vh * 0.028).clamp(16.0, 24.0)),
 
-                // 2. APP TITLE: "AT CHURCH - COPTIC ORTHODOX" (High contrast white / soft gold)
+                // 2. APP TITLE: "AT CHURCH - COPTIC ORTHODOX" (High contrast white / dark charcoal)
                 _buildAnimatedEntry(
                   animation: _titleEntryAnimation,
                   disableAnimations: disableAnimations,
@@ -200,7 +201,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 SizedBox(height: (vh * 0.012).clamp(8.0, 12.0)),
 
-                // 3. TAGLINE: "ANCHORED IN FAITH, CONNECTED IN LOVE" (High contrast #E0E0E0)
+                // 3. TAGLINE: "ANCHORED IN FAITH, CONNECTED IN LOVE" (Dark: #E0E0E0, Light: #3A3A3C)
                 _buildAnimatedEntry(
                   animation: _taglineEntryAnimation,
                   disableAnimations: disableAnimations,
@@ -212,9 +213,7 @@ class _SplashScreenState extends State<SplashScreen>
                       fontFamily: 'Cinzel',
                       fontWeight: FontWeight.w500,
                       fontSize: (vw * 0.028).clamp(11.0, 12.5),
-                      color: isDark
-                          ? const Color(0xFFE0E0E0)
-                          : const Color(0xFF3D3520).withValues(alpha: 0.85),
+                      color: sloganColor,
                       letterSpacing: 2.5,
                       height: 1.45,
                     ),
@@ -235,7 +234,7 @@ class _SplashScreenState extends State<SplashScreen>
                     style: TextStyle(
                       fontSize: (vw * 0.036).clamp(13.5, 15.0),
                       fontWeight: FontWeight.w600,
-                      color: goldAccent,
+                      color: verseColor,
                       height: 1.6,
                       letterSpacing: 0.2,
                     ),
@@ -273,10 +272,9 @@ class _SplashScreenState extends State<SplashScreen>
     bool disableAnimations,
   ) {
     const double logoSize = 180.0;
-    const goldAccent = Color(0xFFE5B869);
-
     final titleColor = isDark ? const Color(0xFFFFFFFF) : const Color(0xFF1C2340);
-    final sloganColor = isDark ? const Color(0xFFE0E0E0) : const Color(0xFF3D3520).withValues(alpha: 0.85);
+    final sloganColor = isDark ? const Color(0xFFE0E0E0) : const Color(0xFF3A3A3C);
+    final verseColor = isDark ? const Color(0xFFE5B869) : const Color(0xFF8B5E14);
 
     return Align(
       alignment: const Alignment(0, -0.06),
@@ -355,7 +353,7 @@ class _SplashScreenState extends State<SplashScreen>
               _buildAnimatedEntry(
                 animation: _verseEntryAnimation,
                 disableAnimations: disableAnimations,
-                child: const Text(
+                child: Text(
                   '«أَنْتُمْ نُورُ الْعَالَمِ. لاَ يُمْكِنُ أَنْ تُخْفَى مَدِينَةٌ مَوْضُوعَةٌ عَلَى جَبَل» (متى 5 : 14)',
                   textAlign: TextAlign.center,
                   textDirection: TextDirection.rtl,
@@ -363,7 +361,7 @@ class _SplashScreenState extends State<SplashScreen>
                   style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w600,
-                    color: goldAccent,
+                    color: verseColor,
                     height: 1.5,
                     letterSpacing: 0.2,
                   ),
@@ -507,8 +505,8 @@ class _SplashScreenState extends State<SplashScreen>
     required bool isDark,
     required bool disableAnimations,
   }) {
-    const spinnerValueColor = Color(0xFFE5B869); // Bright glowing warm gold
-    final spinnerTrackColor = const Color(0xFFE5B869).withValues(alpha: 0.18);
+    final spinnerValueColor = isDark ? const Color(0xFFE5B869) : const Color(0xFFC69214);
+    final spinnerTrackColor = spinnerValueColor.withValues(alpha: 0.18);
 
     if (disableAnimations || _glowAnimation == null) {
       return Semantics(
@@ -518,7 +516,7 @@ class _SplashScreenState extends State<SplashScreen>
           height: 32,
           child: CircularProgressIndicator(
             strokeWidth: 2.8,
-            valueColor: const AlwaysStoppedAnimation<Color>(spinnerValueColor),
+            valueColor: AlwaysStoppedAnimation<Color>(spinnerValueColor),
             backgroundColor: spinnerTrackColor,
           ),
         ),
@@ -541,7 +539,7 @@ class _SplashScreenState extends State<SplashScreen>
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFFE5B869).withValues(alpha: glowAlpha),
+                  color: spinnerValueColor.withValues(alpha: glowAlpha),
                   blurRadius: 16 * glowVal,
                   spreadRadius: 2 * glowVal,
                 ),
@@ -552,7 +550,7 @@ class _SplashScreenState extends State<SplashScreen>
               height: 30,
               child: CircularProgressIndicator(
                 strokeWidth: 2.8,
-                valueColor: const AlwaysStoppedAnimation<Color>(spinnerValueColor),
+                valueColor: AlwaysStoppedAnimation<Color>(spinnerValueColor),
                 backgroundColor: spinnerTrackColor,
               ),
             ),
