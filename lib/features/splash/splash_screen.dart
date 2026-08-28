@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../core/services/init_service.dart';
 import '../../widgets/politia_branded_background.dart';
 
-/// Politia Splash Screen with Mobile Visual Hierarchy Redesign,
-/// Staggered Top-to-Bottom Entry Animations, Breathing Ambient Aura,
-/// and Continuous Glowing Loading Spinner.
+/// Production-ready Politia Splash / Onboarding Screen.
+/// Features seamless edge-to-edge status bar handling, balanced typography hierarchy,
+/// golden Coptic cross divider, elevated scripture card, 3-dot pagination indicator,
+/// and smooth staggered entry animations.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -14,7 +16,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  // Continuous Breathing Glow Controller (Logo Aura & Spinner Glow)
+  // Continuous Breathing Glow Controller (Logo Aura & Active Dot Glow)
   AnimationController? _glowController;
   Animation<double>? _glowAnimation;
 
@@ -22,27 +24,28 @@ class _SplashScreenState extends State<SplashScreen>
   AnimationController? _entryController;
   Animation<double>? _logoEntryAnimation;
   Animation<double>? _titleEntryAnimation;
-  Animation<double>? _taglineEntryAnimation;
-  Animation<double>? _verseEntryAnimation;
+  Animation<double>? _subtitleEntryAnimation;
+  Animation<double>? _cardEntryAnimation;
+  Animation<double>? _footerEntryAnimation;
 
   @override
   void initState() {
     super.initState();
 
-    // 1. Initialize Continuous Breathing Glow
+    // 1. Initialize Continuous Subtle Breathing Glow
     _glowController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2400),
     )..repeat(reverse: true);
 
-    _glowAnimation = Tween<double>(begin: 0.30, end: 1.0).animate(
+    _glowAnimation = Tween<double>(begin: 0.35, end: 1.0).animate(
       CurvedAnimation(
         parent: _glowController!,
         curve: Curves.easeInOutSine,
       ),
     );
 
-    // 2. Initialize Staggered Entry Sequence (1.8 seconds)
+    // 2. Initialize Staggered Entry Sequence (1.8s)
     _entryController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1800),
@@ -50,25 +53,29 @@ class _SplashScreenState extends State<SplashScreen>
 
     _logoEntryAnimation = CurvedAnimation(
       parent: _entryController!,
-      curve: const Interval(0.00, 0.40, curve: Curves.easeOutCubic),
+      curve: const Interval(0.00, 0.35, curve: Curves.easeOutCubic),
     );
 
     _titleEntryAnimation = CurvedAnimation(
       parent: _entryController!,
-      curve: const Interval(0.25, 0.65, curve: Curves.easeOutCubic),
+      curve: const Interval(0.20, 0.55, curve: Curves.easeOutCubic),
     );
 
-    _taglineEntryAnimation = CurvedAnimation(
+    _subtitleEntryAnimation = CurvedAnimation(
       parent: _entryController!,
-      curve: const Interval(0.45, 0.80, curve: Curves.easeOutCubic),
+      curve: const Interval(0.35, 0.70, curve: Curves.easeOutCubic),
     );
 
-    _verseEntryAnimation = CurvedAnimation(
+    _cardEntryAnimation = CurvedAnimation(
+      parent: _entryController!,
+      curve: const Interval(0.50, 0.85, curve: Curves.easeOutCubic),
+    );
+
+    _footerEntryAnimation = CurvedAnimation(
       parent: _entryController!,
       curve: const Interval(0.65, 1.00, curve: Curves.easeOutCubic),
     );
 
-    // Start entry animation
     _entryController!.forward();
 
     // Trigger bootstrap and route navigation
@@ -100,159 +107,195 @@ class _SplashScreenState extends State<SplashScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final disableAnimations = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
 
-    return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushReplacementNamed('/login');
-        },
-        behavior: HitTestBehavior.opaque,
-        child: PolitiaBrandedBackground(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final vw = constraints.maxWidth;
-              final vh = constraints.maxHeight;
-              final isMobile = vw < 600;
+    // Seamless edge-to-edge transparent system bars with appropriate icon contrast
+    final systemOverlayStyle = SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+      statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarDividerColor: Colors.transparent,
+      systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+    );
 
-              return isMobile
-                  ? _buildMobileLayout(context, vw, vh, isDark, disableAnimations)
-                  : _buildDesktopLayout(context, vw, vh, isDark, disableAnimations);
-            },
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: systemOverlayStyle,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        backgroundColor: Colors.transparent,
+        body: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushReplacementNamed('/login');
+          },
+          behavior: HitTestBehavior.opaque,
+          child: PolitiaBrandedBackground(
+            child: SafeArea(
+              maintainBottomViewPadding: true,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final vw = constraints.maxWidth;
+                  final vh = constraints.maxHeight;
+
+                  return Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 480.0),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: (vw * 0.07).clamp(20.0, 32.0),
+                        ),
+                        child: _buildMainLayout(
+                          context: context,
+                          vw: vw,
+                          vh: vh,
+                          isDark: isDark,
+                          disableAnimations: disableAnimations,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
         ),
       ),
     );
   }
 
-  // =========================================================================
-  // MOBILE REDESIGNED LAYOUT (~25% Logo, ~35% Title, ~45% Tagline, ~55% Verse, ~80% Spinner)
-  // =========================================================================
-  Widget _buildMobileLayout(
-    BuildContext context,
-    double vw,
-    double vh,
-    bool isDark,
-    bool disableAnimations,
-  ) {
-    // Scaled logo up by ~15–20% (142 - 168px)
-    final double logoSize = (vw * 0.38).clamp(142.0, 168.0);
-    final sloganColor = isDark ? const Color(0xFFE0E0E0) : const Color(0xFF3A3A3C);
-    final verseColor = isDark ? const Color(0xFFE5B869) : const Color(0xFF8B5E14);
+  Widget _buildMainLayout({
+    required BuildContext context,
+    required double vw,
+    required double vh,
+    required bool isDark,
+    required bool disableAnimations,
+  }) {
+    // Theme Colors
+    final navyTitleColor = isDark ? const Color(0xFFFFFFFF) : const Color(0xFF16203B);
+    final subtitleColor = isDark ? const Color(0xFFD1D5DB) : const Color(0xFF3A3A3C);
+    const goldAccent = Color(0xFFE5B869); // Warm Gold
 
-    return Stack(
+    // Responsive element dimensions
+    final logoSize = (vw * 0.28).clamp(112.0, 136.0);
+    final titleFontSize = (vw * 0.058).clamp(20.0, 24.0);
+    final subtitleFontSize = (vw * 0.027).clamp(10.5, 12.0);
+
+    return Column(
       children: [
-        // Main Content Column (Logo -> Title -> Tagline -> Verse)
-        Positioned.fill(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: (vw * 0.08).clamp(24.0, 36.0)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Upper Section Spacer (~18-22% top margin to place logo center at ~25-28%)
-                SizedBox(height: vh * 0.12),
-
-                // 1. BRAND LOGO (Scaled +20% with ambient luminous aura)
-                _buildAnimatedEntry(
-                  animation: _logoEntryAnimation,
-                  disableAnimations: disableAnimations,
-                  child: SizedBox(
-                    width: logoSize,
-                    height: logoSize,
-                    child: OverflowBox(
-                      maxWidth: logoSize * 1.9,
-                      maxHeight: logoSize * 1.9,
-                      child: _buildGlowingLogo(
-                        logoSize: logoSize,
-                        isDark: isDark,
-                        disableAnimations: disableAnimations,
+        // Main Centered Content
+        Expanded(
+          child: Center(
+            child: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // 1. BRAND LOGO (Centered with ambient breathing glow)
+                  _buildAnimatedEntry(
+                    animation: _logoEntryAnimation,
+                    disableAnimations: disableAnimations,
+                    child: SizedBox(
+                      width: logoSize,
+                      height: logoSize,
+                      child: OverflowBox(
+                        maxWidth: logoSize * 1.7,
+                        maxHeight: logoSize * 1.7,
+                        child: _buildGlowingLogo(
+                          logoSize: logoSize,
+                          isDark: isDark,
+                          disableAnimations: disableAnimations,
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                SizedBox(height: (vh * 0.028).clamp(16.0, 24.0)),
+                  SizedBox(height: (vh * 0.024).clamp(16.0, 24.0)),
 
-                // 2. APP TITLE: "AT CHURCH - COPTIC ORTHODOX" (High contrast white / dark charcoal)
-                _buildAnimatedEntry(
-                  animation: _titleEntryAnimation,
-                  disableAnimations: disableAnimations,
-                  child: Text(
-                    'AT CHURCH - COPTIC ORTHODOX',
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    style: TextStyle(
-                      fontFamily: 'Cinzel',
-                      fontWeight: FontWeight.bold,
-                      fontSize: (vw * 0.062).clamp(22.0, 26.0),
-                      color: isDark ? const Color(0xFFFFFFFF) : const Color(0xFF161513),
-                      letterSpacing: 2.0,
-                      height: 1.25,
-                      shadows: isDark
-                          ? [
-                              Shadow(
-                                color: Colors.black.withValues(alpha: 0.6),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ]
-                          : null,
+                  // 2. MAIN APP TITLE: "AT CHURCH - COPTIC ORTHODOX"
+                  _buildAnimatedEntry(
+                    animation: _titleEntryAnimation,
+                    disableAnimations: disableAnimations,
+                    child: Text(
+                      'AT CHURCH - COPTIC\nORTHODOX',
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontFamily: 'Cinzel',
+                        fontWeight: FontWeight.bold,
+                        fontSize: titleFontSize,
+                        color: navyTitleColor,
+                        letterSpacing: 2.0,
+                        height: 1.28,
+                        shadows: isDark
+                            ? [
+                                Shadow(
+                                  color: Colors.black.withValues(alpha: 0.60),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ]
+                            : null,
+                      ),
                     ),
                   ),
-                ),
 
-                SizedBox(height: (vh * 0.012).clamp(8.0, 12.0)),
+                  SizedBox(height: (vh * 0.016).clamp(10.0, 16.0)),
 
-                // 3. TAGLINE: "ANCHORED IN FAITH, CONNECTED IN LOVE" (Dark: #E0E0E0, Light: #3A3A3C)
-                _buildAnimatedEntry(
-                  animation: _taglineEntryAnimation,
-                  disableAnimations: disableAnimations,
-                  child: Text(
-                    'ANCHORED IN FAITH, CONNECTED IN LOVE',
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    style: TextStyle(
-                      fontFamily: 'Cinzel',
-                      fontWeight: FontWeight.w500,
-                      fontSize: (vw * 0.028).clamp(11.0, 12.5),
-                      color: sloganColor,
-                      letterSpacing: 2.5,
-                      height: 1.45,
+                  // 3. ELEGANT GOLDEN CROSS DIVIDER LINE
+                  _buildAnimatedEntry(
+                    animation: _titleEntryAnimation,
+                    disableAnimations: disableAnimations,
+                    child: _buildCrossDivider(goldAccent),
+                  ),
+
+                  SizedBox(height: (vh * 0.014).clamp(10.0, 14.0)),
+
+                  // 4. SUBTITLE: "ANCHORED IN FAITH, CONNECTED IN LOVE"
+                  _buildAnimatedEntry(
+                    animation: _subtitleEntryAnimation,
+                    disableAnimations: disableAnimations,
+                    child: Text(
+                      'ANCHORED IN FAITH, CONNECTED IN LOVE',
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontFamily: 'Cinzel',
+                        fontWeight: FontWeight.w500,
+                        fontSize: subtitleFontSize,
+                        color: subtitleColor,
+                        letterSpacing: 2.2,
+                        height: 1.4,
+                      ),
                     ),
                   ),
-                ),
 
-                SizedBox(height: (vh * 0.035).clamp(20.0, 32.0)),
+                  SizedBox(height: (vh * 0.038).clamp(24.0, 36.0)),
 
-                // 4. ARABIC BIBLICAL VERSE: «أَنْتُمْ نُورُ الْعَالَمِ. لاَ يُمْكِنُ أَنْ تُخْفَى مَدِينَةٌ مَوْضُوعَةٌ عَلَى جَبَل» (متى 5 : 14)
-                _buildAnimatedEntry(
-                  animation: _verseEntryAnimation,
-                  disableAnimations: disableAnimations,
-                  child: Text(
-                    '«أَنْتُمْ نُورُ الْعَالَمِ. لاَ يُمْكِنُ أَنْ تُخْفَى مَدِينَةٌ مَوْضُوعَةٌ عَلَى جَبَل» (متى 5 : 14)',
-                    textAlign: TextAlign.center,
-                    textDirection: TextDirection.rtl,
-                    softWrap: true,
-                    style: TextStyle(
-                      fontSize: (vw * 0.036).clamp(13.5, 15.0),
-                      fontWeight: FontWeight.w600,
-                      color: verseColor,
-                      height: 1.6,
-                      letterSpacing: 0.2,
+                  // 5. SCRIPTURE CONTAINER CARD
+                  _buildAnimatedEntry(
+                    animation: _cardEntryAnimation,
+                    disableAnimations: disableAnimations,
+                    child: _buildScriptureCard(
+                      vw: vw,
+                      isDark: isDark,
+                      goldAccent: goldAccent,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
 
-        // 5. LOADING SPINNER (Positioned at ~80–85% from top with continuous pulsing glow)
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: (vh * 0.12).clamp(48.0, 80.0),
-          child: Center(
-            child: _buildGlowingSpinner(
+        // 6. BOTTOM PAGINATION INDICATOR (3 Dots)
+        Padding(
+          padding: const EdgeInsets.only(top: 12.0, bottom: 16.0),
+          child: _buildAnimatedEntry(
+            animation: _footerEntryAnimation,
+            disableAnimations: disableAnimations,
+            child: _buildPaginationDots(
               isDark: isDark,
+              goldAccent: goldAccent,
               disableAnimations: disableAnimations,
             ),
           ),
@@ -262,157 +305,207 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   // =========================================================================
-  // DESKTOP / TABLET LAYOUT (Preserved Optical Balance)
+  // GOLDEN CROSS DIVIDER COMPONENT
   // =========================================================================
-  Widget _buildDesktopLayout(
-    BuildContext context,
-    double vw,
-    double vh,
-    bool isDark,
-    bool disableAnimations,
-  ) {
-    const double logoSize = 180.0;
-    final titleColor = isDark ? const Color(0xFFFFFFFF) : const Color(0xFF1C2340);
-    final sloganColor = isDark ? const Color(0xFFE0E0E0) : const Color(0xFF3A3A3C);
-    final verseColor = isDark ? const Color(0xFFE5B869) : const Color(0xFF8B5E14);
-
-    return Align(
-      alignment: const Alignment(0, -0.06),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 540.0),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Logo
-              _buildAnimatedEntry(
-                animation: _logoEntryAnimation,
-                disableAnimations: disableAnimations,
-                child: SizedBox(
-                  width: logoSize,
-                  height: logoSize,
-                  child: OverflowBox(
-                    maxWidth: logoSize * 1.8,
-                    maxHeight: logoSize * 1.8,
-                    child: _buildGlowingLogo(
-                      logoSize: logoSize,
-                      isDark: isDark,
-                      disableAnimations: disableAnimations,
-                    ),
-                  ),
+  Widget _buildCrossDivider(Color goldAccent) {
+    return SizedBox(
+      width: 220.0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(
+              height: 1.0,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    goldAccent.withValues(alpha: 0.0),
+                    goldAccent.withValues(alpha: 0.7),
+                  ],
                 ),
               ),
-
-              const SizedBox(height: 24),
-
-              // Title
-              _buildAnimatedEntry(
-                animation: _titleEntryAnimation,
-                disableAnimations: disableAnimations,
-                child: Text(
-                  'AT CHURCH - COPTIC ORTHODOX',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontFamily: 'Cinzel',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 28.0,
-                    color: titleColor,
-                    letterSpacing: 2.0,
-                    height: 1.25,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              // Tagline
-              _buildAnimatedEntry(
-                animation: _taglineEntryAnimation,
-                disableAnimations: disableAnimations,
-                child: Text(
-                  'ANCHORED IN FAITH, CONNECTED IN LOVE',
-                  textAlign: TextAlign.center,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontFamily: 'Cinzel',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12.5,
-                    color: sloganColor,
-                    letterSpacing: 2.5,
-                    height: 1.5,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 18),
-
-              // Arabic Verse
-              _buildAnimatedEntry(
-                animation: _verseEntryAnimation,
-                disableAnimations: disableAnimations,
-                child: Text(
-                  '«أَنْتُمْ نُورُ الْعَالَمِ. لاَ يُمْكِنُ أَنْ تُخْفَى مَدِينَةٌ مَوْضُوعَةٌ عَلَى جَبَل» (متى 5 : 14)',
-                  textAlign: TextAlign.center,
-                  textDirection: TextDirection.rtl,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w600,
-                    color: verseColor,
-                    height: 1.5,
-                    letterSpacing: 0.2,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 36),
-
-              // Spinner
-              _buildGlowingSpinner(
-                isDark: isDark,
-                disableAnimations: disableAnimations,
-              ),
-            ],
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Icon(
+              Icons.add_rounded,
+              size: 16,
+              color: goldAccent,
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height: 1.0,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    goldAccent.withValues(alpha: 0.7),
+                    goldAccent.withValues(alpha: 0.0),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   // =========================================================================
-  // ANIMATED ENTRY HELPER (Fade + Subtle Upward Slide)
+  // SCRIPTURE QUOTE CARD COMPONENT
   // =========================================================================
-  Widget _buildAnimatedEntry({
-    required Animation<double>? animation,
-    required bool disableAnimations,
-    required Widget child,
+  Widget _buildScriptureCard({
+    required double vw,
+    required bool isDark,
+    required Color goldAccent,
   }) {
-    if (disableAnimations || animation == null) {
-      return child;
+    final cardBg = isDark
+        ? const Color(0xFF1B1A17).withValues(alpha: 0.90)
+        : const Color(0xFFFAF7F0).withValues(alpha: 0.92);
+
+    final cardBorder = isDark
+        ? goldAccent.withValues(alpha: 0.30)
+        : goldAccent.withValues(alpha: 0.40);
+
+    final verseTextColor = isDark
+        ? const Color(0xFFF3C775)
+        : const Color(0xFF8B5E14);
+
+    final citationColor = isDark
+        ? goldAccent.withValues(alpha: 0.90)
+        : const Color(0xFF8B5E14).withValues(alpha: 0.85);
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(
+        horizontal: (vw * 0.06).clamp(20.0, 28.0),
+        vertical: 20.0,
+      ),
+      decoration: BoxDecoration(
+        color: cardBg,
+        borderRadius: BorderRadius.circular(22.0),
+        border: Border.all(color: cardBorder, width: 1.0),
+        boxShadow: [
+          BoxShadow(
+            color: isDark
+                ? Colors.black.withValues(alpha: 0.35)
+                : const Color(0xFF8B5E14).withValues(alpha: 0.07),
+            blurRadius: 20,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Arabic Verse Quote
+          Text(
+            '«أَنْتُمْ نُورُ الْعَالَمِ. لَا يُمْكِنُ أَنْ تُخْفَى مَدِينَةٌ مَوْضُوعَةٌ عَلَى جَبَلٍ»',
+            textAlign: TextAlign.center,
+            textDirection: TextDirection.rtl,
+            softWrap: true,
+            style: TextStyle(
+              fontSize: (vw * 0.038).clamp(14.0, 15.5),
+              fontWeight: FontWeight.w600,
+              color: verseTextColor,
+              height: 1.65,
+              letterSpacing: 0.2,
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          // Citation Reference
+          Text(
+            '(متى 5 : 14)',
+            textAlign: TextAlign.center,
+            textDirection: TextDirection.rtl,
+            style: TextStyle(
+              fontSize: (vw * 0.032).clamp(12.5, 14.0),
+              fontWeight: FontWeight.w500,
+              color: citationColor,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // =========================================================================
+  // 3-DOT PAGINATION INDICATOR
+  // =========================================================================
+  Widget _buildPaginationDots({
+    required bool isDark,
+    required Color goldAccent,
+    required bool disableAnimations,
+  }) {
+    final inactiveDotColor = isDark
+        ? Colors.white.withValues(alpha: 0.20)
+        : const Color(0xFF16203B).withValues(alpha: 0.18);
+
+    if (disableAnimations || _glowAnimation == null) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildDot(color: inactiveDotColor, size: 7.0),
+          const SizedBox(width: 8),
+          _buildDot(color: goldAccent, size: 8.5),
+          const SizedBox(width: 8),
+          _buildDot(color: inactiveDotColor, size: 7.0),
+        ],
+      );
     }
 
     return AnimatedBuilder(
-      animation: animation,
+      animation: _glowAnimation!,
       builder: (context, _) {
-        final opacity = animation.value.clamp(0.0, 1.0);
-        final offsetY = (1.0 - animation.value) * 14.0;
+        final glowVal = _glowAnimation!.value;
 
-        return Transform.translate(
-          offset: Offset(0, offsetY),
-          child: Opacity(
-            opacity: opacity,
-            child: child,
-          ),
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildDot(color: inactiveDotColor, size: 7.0),
+            const SizedBox(width: 8),
+            // Active middle dot with subtle breathing aura
+            Container(
+              width: 9.0,
+              height: 9.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: goldAccent,
+                boxShadow: [
+                  BoxShadow(
+                    color: goldAccent.withValues(alpha: 0.40 * glowVal),
+                    blurRadius: 8.0 * glowVal,
+                    spreadRadius: 1.5 * glowVal,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            _buildDot(color: inactiveDotColor, size: 7.0),
+          ],
         );
       },
     );
   }
 
+  Widget _buildDot({required Color color, required double size}) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color,
+      ),
+    );
+  }
+
   // =========================================================================
-  // GLOWING LOGO WITH AMBIENT LIGHTING AURA
+  // GLOWING LOGO COMPONENT
   // =========================================================================
   Widget _buildGlowingLogo({
     required double logoSize,
@@ -420,7 +513,7 @@ class _SplashScreenState extends State<SplashScreen>
     required bool disableAnimations,
   }) {
     if (disableAnimations || _glowAnimation == null) {
-      final staticOpacity = isDark ? 0.50 : 0.32;
+      final staticOpacity = isDark ? 0.45 : 0.25;
       return _buildGlowStack(
         logoSize: logoSize,
         glowOpacity: staticOpacity,
@@ -432,7 +525,7 @@ class _SplashScreenState extends State<SplashScreen>
       animation: _glowAnimation!,
       builder: (context, _) {
         final animatedVal = _glowAnimation!.value;
-        final glowOpacity = isDark ? animatedVal * 0.65 : animatedVal * 0.40;
+        final glowOpacity = isDark ? animatedVal * 0.55 : animatedVal * 0.35;
 
         return _buildGlowStack(
           logoSize: logoSize,
@@ -448,7 +541,7 @@ class _SplashScreenState extends State<SplashScreen>
     required double glowOpacity,
     required bool isDark,
   }) {
-    final glowDiameter = logoSize * 1.65;
+    final glowDiameter = logoSize * 1.55;
 
     return Stack(
       alignment: Alignment.center,
@@ -462,8 +555,8 @@ class _SplashScreenState extends State<SplashScreen>
             gradient: RadialGradient(
               colors: [
                 const Color(0xFFD97706).withValues(alpha: glowOpacity.clamp(0.0, 1.0)),
-                const Color(0xFFE5B869).withValues(alpha: (glowOpacity * 0.60).clamp(0.0, 1.0)),
-                const Color(0xFFB45309).withValues(alpha: (glowOpacity * 0.20).clamp(0.0, 1.0)),
+                const Color(0xFFE5B869).withValues(alpha: (glowOpacity * 0.55).clamp(0.0, 1.0)),
+                const Color(0xFFB45309).withValues(alpha: (glowOpacity * 0.15).clamp(0.0, 1.0)),
                 const Color(0xFFB45309).withValues(alpha: 0.0),
               ],
               stops: const [0.0, 0.35, 0.70, 1.0],
@@ -471,7 +564,7 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         ),
 
-        // Crisp Logo Image
+        // Logo Image
         ClipOval(
           child: Image.asset(
             'assets/images/logo.webp',
@@ -489,7 +582,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: const Icon(
                 Icons.church_rounded,
                 color: Colors.white,
-                size: 64,
+                size: 56,
               ),
             ),
           ),
@@ -499,61 +592,28 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   // =========================================================================
-  // GLOWING LOADING SPINNER WITH BREATHING HALO
+  // ANIMATED ENTRY HELPER
   // =========================================================================
-  Widget _buildGlowingSpinner({
-    required bool isDark,
+  Widget _buildAnimatedEntry({
+    required Animation<double>? animation,
     required bool disableAnimations,
+    required Widget child,
   }) {
-    final spinnerValueColor = isDark ? const Color(0xFFE5B869) : const Color(0xFFC69214);
-    final spinnerTrackColor = spinnerValueColor.withValues(alpha: 0.18);
-
-    if (disableAnimations || _glowAnimation == null) {
-      return Semantics(
-        label: 'Application loading',
-        child: SizedBox(
-          width: 32,
-          height: 32,
-          child: CircularProgressIndicator(
-            strokeWidth: 2.8,
-            valueColor: AlwaysStoppedAnimation<Color>(spinnerValueColor),
-            backgroundColor: spinnerTrackColor,
-          ),
-        ),
-      );
+    if (disableAnimations || animation == null) {
+      return child;
     }
 
     return AnimatedBuilder(
-      animation: _glowAnimation!,
+      animation: animation,
       builder: (context, _) {
-        final glowVal = _glowAnimation!.value;
-        final glowAlpha = (glowVal * 0.35).clamp(0.0, 1.0);
+        final opacity = animation.value.clamp(0.0, 1.0);
+        final offsetY = (1.0 - animation.value) * 12.0;
 
-        return Semantics(
-          label: 'Application loading',
-          child: Container(
-            width: 44,
-            height: 44,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: spinnerValueColor.withValues(alpha: glowAlpha),
-                  blurRadius: 16 * glowVal,
-                  spreadRadius: 2 * glowVal,
-                ),
-              ],
-            ),
-            child: SizedBox(
-              width: 30,
-              height: 30,
-              child: CircularProgressIndicator(
-                strokeWidth: 2.8,
-                valueColor: AlwaysStoppedAnimation<Color>(spinnerValueColor),
-                backgroundColor: spinnerTrackColor,
-              ),
-            ),
+        return Transform.translate(
+          offset: Offset(0, offsetY),
+          child: Opacity(
+            opacity: opacity,
+            child: child,
           ),
         );
       },
