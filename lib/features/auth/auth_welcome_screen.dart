@@ -133,7 +133,7 @@ class _AuthWelcomeScreenState extends State<AuthWelcomeScreen>
 
                         // Title Typography
                         Text(
-                          'At Church - Coptic\u00A0Orthodox',
+                          'Politia – Coptic\u00A0Orthodox',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Cinzel',
