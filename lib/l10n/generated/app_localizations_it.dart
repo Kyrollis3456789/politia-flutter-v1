@@ -12,13 +12,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get appTitle => 'Politia';
 
   @override
-  String get welcomeMessage => 'Benvenuto su Politia';
+  String get copticOrthodox => 'COPTA ORTODOSSA';
+
+  @override
+  String get welcomeMessage => 'Benvenuto in Politia';
 
   @override
   String get statusRunning => 'Motore della piattaforma operativo';
 
   @override
-  String get changeLanguage => 'Lingua';
+  String get changeLanguage => 'Cambia lingua';
+
+  @override
+  String get selectLanguage => 'SELEZIONA LINGUA';
+
+  @override
+  String get welcome => 'BENVENUTO';
 
   @override
   String get welcomeBack => 'Bentornato';
@@ -30,7 +39,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get signUp => 'REGISTRATI';
 
   @override
-  String get helloSignIn => 'Ciao!\nAccedi';
+  String get signInDescription =>
+      'Inserisci la tua email o il tuo numero di cellulare registrato per procedere.';
+
+  @override
+  String get helloSignIn => 'Ciao\nAccedi!';
 
   @override
   String get createYourAccount => 'Crea il tuo\naccount';
@@ -45,13 +58,38 @@ class AppLocalizationsIt extends AppLocalizations {
   String get phoneOrEmail => 'Telefono o Email';
 
   @override
+  String get emailOrMobile => 'Email o numero di cellulare';
+
+  @override
+  String get emailOrMobileHint => 'webx@gmail.com o 010XXXXXXXX';
+
+  @override
+  String get supportedEgyptianCarriers =>
+      'Operatori egiziani supportati: 010, 011, 012, 015';
+
+  @override
+  String get continueText => 'Continua';
+
+  @override
+  String get orDivider => 'O';
+
+  @override
+  String get continueWithGoogle => 'Continua con Google';
+
+  @override
+  String get continueWithFacebook => 'Continua con Facebook';
+
+  @override
+  String get continueWithApple => 'Continua with Apple';
+
+  @override
   String get password => 'Password';
 
   @override
   String get confirmPassword => 'Conferma password';
 
   @override
-  String get fullName => 'Nome completo';
+  String get fullName => 'Nome e cognome';
 
   @override
   String get forgotPassword => 'Password dimenticata?';
@@ -70,152 +108,87 @@ class AppLocalizationsIt extends AppLocalizations {
       'La password deve contenere almeno 6 caratteri';
 
   @override
-  String get passwordsDoNotMatch => 'Le password non corrispondono';
+  String get passwordsDoNotMatch => 'Le password non coincidono';
 
   @override
-  String get nameRequired => 'Il nome completo è obbligatorio';
-}
-
-/// The translations for Italian, as used in Switzerland (`it_CH`).
-class AppLocalizationsItCh extends AppLocalizationsIt {
-  AppLocalizationsItCh() : super('it_CH');
+  String get nameRequired => 'Il nome e cognome è obbligatorio';
 
   @override
-  String get appTitle => 'Politia';
+  String get back => 'Indietro';
 
   @override
-  String get welcomeMessage => 'Benvenuto su Politia';
+  String get enterEmailOrPhone =>
+      'Inserisci la tua email o il tuo numero di telefono';
 
   @override
-  String get statusRunning => 'Motore della piattaforma operativo';
+  String get invalidIdentityError =>
+      'Inserisci un\'email valida o un numero egiziano valido (010, 011, 012, 015)';
 
   @override
-  String get changeLanguage => 'Lingua';
+  String get userNotRegistered => 'Email o numero di telefono non registrati.';
 
   @override
-  String get welcomeBack => 'Bentornato';
+  String get enterPassword => 'Inserisci la tua password';
 
   @override
-  String get signIn => 'ACCEDI';
+  String get incorrectPassword => 'Password non corretta.';
 
   @override
-  String get signUp => 'REGISTRATI';
+  String attemptsRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tentativi rimanenti.',
+      one: '1 tentativo rimanente.',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get helloSignIn => 'Ciao!\nAccedi';
+  String get maxAttemptsOtp =>
+      'Numero massimo di tentativi raggiunto (10/10). Codice di verifica (OTP) attivato.';
 
   @override
-  String get createYourAccount => 'Crea il tuo\naccount';
+  String get enterOtpCode => 'Inserisci il codice di verifica (6 cifre)';
 
   @override
-  String get email => 'Email';
+  String get enterFullOtp => 'Inserisci il codice OTP completo di 6 cifre';
 
   @override
-  String get emailOrUsername => 'Email o nome utente';
+  String otpSent(String identity) {
+    return 'Codice di verifica inviato a $identity';
+  }
 
   @override
-  String get phoneOrEmail => 'Telefono o Email';
+  String resendCodeIn(int seconds) {
+    return 'Reinvia codice tra ${seconds}s';
+  }
 
   @override
-  String get password => 'Password';
+  String get resendCode => 'Reinvia codice';
 
   @override
-  String get confirmPassword => 'Conferma password';
+  String get switchAccount => 'Cambia account';
 
   @override
-  String get fullName => 'Nome completo';
+  String get verifyAndSignIn => 'Verifica e accedi';
 
   @override
-  String get forgotPassword => 'Password dimenticata?';
+  String get usePasswordInstead => 'Usa la password invece';
 
   @override
-  String get dontHaveAccount => 'Non hai un account?';
+  String get contactAdminForgot =>
+      'Contatta l\'amministratore per reimpostare la password o usa l\'OTP';
 
   @override
-  String get alreadyHaveAccount => 'Hai già un account?';
+  String get registeredMember => 'Membro registrato';
 
   @override
-  String get invalidEmail => 'Inserisci un\'email valida';
+  String comingSoon(String provider) {
+    return 'Accesso con $provider presto disponibile';
+  }
 
   @override
-  String get passwordTooShort =>
-      'La password deve contenere almeno 6 caratteri';
-
-  @override
-  String get passwordsDoNotMatch => 'Le password non corrispondono';
-
-  @override
-  String get nameRequired => 'Il nome completo è obbligatorio';
-}
-
-/// The translations for Italian, as used in Italy (`it_IT`).
-class AppLocalizationsItIt extends AppLocalizationsIt {
-  AppLocalizationsItIt() : super('it_IT');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Benvenuto su Politia';
-
-  @override
-  String get statusRunning => 'Motore della piattaforma operativo';
-
-  @override
-  String get changeLanguage => 'Lingua';
-
-  @override
-  String get welcomeBack => 'Bentornato';
-
-  @override
-  String get signIn => 'ACCEDI';
-
-  @override
-  String get signUp => 'REGISTRATI';
-
-  @override
-  String get helloSignIn => 'Ciao!\nAccedi';
-
-  @override
-  String get createYourAccount => 'Crea il tuo\naccount';
-
-  @override
-  String get email => 'Email';
-
-  @override
-  String get emailOrUsername => 'Email o nome utente';
-
-  @override
-  String get phoneOrEmail => 'Telefono o Email';
-
-  @override
-  String get password => 'Password';
-
-  @override
-  String get confirmPassword => 'Conferma password';
-
-  @override
-  String get fullName => 'Nome completo';
-
-  @override
-  String get forgotPassword => 'Password dimenticata?';
-
-  @override
-  String get dontHaveAccount => 'Non hai un account?';
-
-  @override
-  String get alreadyHaveAccount => 'Hai già un account?';
-
-  @override
-  String get invalidEmail => 'Inserisci un\'email valida';
-
-  @override
-  String get passwordTooShort =>
-      'La password deve contenere almeno 6 caratteri';
-
-  @override
-  String get passwordsDoNotMatch => 'Le password non corrispondono';
-
-  @override
-  String get nameRequired => 'Il nome completo è obbligatorio';
+  String get verseText =>
+      '\"Perché dove sono due o tre riuniti nel mio nome, lì sono io in mezzo a loro.\" — Matteo 18:20';
 }

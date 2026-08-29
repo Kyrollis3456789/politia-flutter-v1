@@ -12,13 +12,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appTitle => 'Politia';
 
   @override
+  String get copticOrthodox => 'COPTO ORTODOXO';
+
+  @override
   String get welcomeMessage => 'Bienvenido a Politia';
 
   @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
+  String get statusRunning => 'Motor de plataforma operativo';
 
   @override
-  String get changeLanguage => 'Idioma';
+  String get changeLanguage => 'Cambiar idioma';
+
+  @override
+  String get selectLanguage => 'SELECCIONAR IDIOMA';
+
+  @override
+  String get welcome => 'BIENVENIDO';
 
   @override
   String get welcomeBack => 'Bienvenido de nuevo';
@@ -30,7 +39,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get signUp => 'REGISTRARSE';
 
   @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
+  String get signInDescription =>
+      'Ingrese su correo electrónico o número de teléfono registrado para continuar.';
+
+  @override
+  String get helloSignIn => 'Hola\n¡Inicia sesión!';
 
   @override
   String get createYourAccount => 'Crea tu\ncuenta';
@@ -39,10 +52,35 @@ class AppLocalizationsEs extends AppLocalizations {
   String get email => 'Correo electrónico';
 
   @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
+  String get emailOrUsername => 'Correo electrónico o usuario';
 
   @override
-  String get phoneOrEmail => 'Teléfono o correo';
+  String get phoneOrEmail => 'Teléfono o correo electrónico';
+
+  @override
+  String get emailOrMobile => 'Correo o número de teléfono';
+
+  @override
+  String get emailOrMobileHint => 'webx@gmail.com o 010XXXXXXXX';
+
+  @override
+  String get supportedEgyptianCarriers =>
+      'Operadores egipcios compatibles: 010, 011, 012, 015';
+
+  @override
+  String get continueText => 'Continuar';
+
+  @override
+  String get orDivider => 'O';
+
+  @override
+  String get continueWithGoogle => 'Continuar con Google';
+
+  @override
+  String get continueWithFacebook => 'Continuar con Facebook';
+
+  @override
+  String get continueWithApple => 'Continuar con Apple';
 
   @override
   String get password => 'Contraseña';
@@ -74,1444 +112,85 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get nameRequired => 'El nombre completo es obligatorio';
-}
 
-/// The translations for Spanish Castilian, as used in Argentina (`es_AR`).
-class AppLocalizationsEsAr extends AppLocalizationsEs {
-  AppLocalizationsEsAr() : super('es_AR');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Bolivia (`es_BO`).
-class AppLocalizationsEsBo extends AppLocalizationsEs {
-  AppLocalizationsEsBo() : super('es_BO');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Chile (`es_CL`).
-class AppLocalizationsEsCl extends AppLocalizationsEs {
-  AppLocalizationsEsCl() : super('es_CL');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Colombia (`es_CO`).
-class AppLocalizationsEsCo extends AppLocalizationsEs {
-  AppLocalizationsEsCo() : super('es_CO');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Costa Rica (`es_CR`).
-class AppLocalizationsEsCr extends AppLocalizationsEs {
-  AppLocalizationsEsCr() : super('es_CR');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in the Dominican Republic (`es_DO`).
-class AppLocalizationsEsDo extends AppLocalizationsEs {
-  AppLocalizationsEsDo() : super('es_DO');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Ecuador (`es_EC`).
-class AppLocalizationsEsEc extends AppLocalizationsEs {
-  AppLocalizationsEsEc() : super('es_EC');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Spain (`es_ES`).
-class AppLocalizationsEsEs extends AppLocalizationsEs {
-  AppLocalizationsEsEs() : super('es_ES');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Guatemala (`es_GT`).
-class AppLocalizationsEsGt extends AppLocalizationsEs {
-  AppLocalizationsEsGt() : super('es_GT');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Honduras (`es_HN`).
-class AppLocalizationsEsHn extends AppLocalizationsEs {
-  AppLocalizationsEsHn() : super('es_HN');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Mexico (`es_MX`).
-class AppLocalizationsEsMx extends AppLocalizationsEs {
-  AppLocalizationsEsMx() : super('es_MX');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Nicaragua (`es_NI`).
-class AppLocalizationsEsNi extends AppLocalizationsEs {
-  AppLocalizationsEsNi() : super('es_NI');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Panama (`es_PA`).
-class AppLocalizationsEsPa extends AppLocalizationsEs {
-  AppLocalizationsEsPa() : super('es_PA');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Peru (`es_PE`).
-class AppLocalizationsEsPe extends AppLocalizationsEs {
-  AppLocalizationsEsPe() : super('es_PE');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Puerto Rico (`es_PR`).
-class AppLocalizationsEsPr extends AppLocalizationsEs {
-  AppLocalizationsEsPr() : super('es_PR');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Paraguay (`es_PY`).
-class AppLocalizationsEsPy extends AppLocalizationsEs {
-  AppLocalizationsEsPy() : super('es_PY');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in El Salvador (`es_SV`).
-class AppLocalizationsEsSv extends AppLocalizationsEs {
-  AppLocalizationsEsSv() : super('es_SV');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in the United States (`es_US`).
-class AppLocalizationsEsUs extends AppLocalizationsEs {
-  AppLocalizationsEsUs() : super('es_US');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Uruguay (`es_UY`).
-class AppLocalizationsEsUy extends AppLocalizationsEs {
-  AppLocalizationsEsUy() : super('es_UY');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
-  @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
-
-  @override
-  String get changeLanguage => 'Idioma';
-
-  @override
-  String get welcomeBack => 'Bienvenido de nuevo';
-
-  @override
-  String get signIn => 'INICIAR SESIÓN';
-
-  @override
-  String get signUp => 'REGISTRARSE';
-
-  @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
-
-  @override
-  String get createYourAccount => 'Crea tu\ncuenta';
-
-  @override
-  String get email => 'Correo electrónico';
-
-  @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
-
-  @override
-  String get phoneOrEmail => 'Teléfono o correo';
-
-  @override
-  String get password => 'Contraseña';
-
-  @override
-  String get confirmPassword => 'Confirmar contraseña';
-
-  @override
-  String get fullName => 'Nombre completo';
-
-  @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
-
-  @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
-
-  @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
-
-  @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
-
-  @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
-
-  @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
-
-  @override
-  String get nameRequired => 'El nombre completo es obligatorio';
-}
-
-/// The translations for Spanish Castilian, as used in Venezuela (`es_VE`).
-class AppLocalizationsEsVe extends AppLocalizationsEs {
-  AppLocalizationsEsVe() : super('es_VE');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenido a Politia';
-
   @override
-  String get statusRunning => 'Motor de plataforma y localización operativos';
+  String get back => 'Atrás';
 
   @override
-  String get changeLanguage => 'Idioma';
+  String get enterEmailOrPhone =>
+      'Por favor ingresa tu correo o número de teléfono';
 
   @override
-  String get welcomeBack => 'Bienvenido de nuevo';
+  String get invalidIdentityError =>
+      'Por favor ingresa un correo válido o número egipcio (010, 011, 012, 015)';
 
   @override
-  String get signIn => 'INICIAR SESIÓN';
+  String get userNotRegistered =>
+      'Correo electrónico o teléfono no registrado.';
 
   @override
-  String get signUp => 'REGISTRARSE';
+  String get enterPassword => 'Por favor ingresa tu contraseña';
 
   @override
-  String get helloSignIn => '¡Hola!\nInicia sesión';
+  String get incorrectPassword => 'Contraseña incorrecta.';
 
   @override
-  String get createYourAccount => 'Crea tu\ncuenta';
+  String attemptsRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count intentos restantes.',
+      one: '1 intento restante.',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get email => 'Correo electrónico';
+  String get maxAttemptsOtp =>
+      'Se alcanzó el número máximo de intentos (10/10). Código OTP activado.';
 
   @override
-  String get emailOrUsername => 'Correo o nombre de usuario';
+  String get enterOtpCode => 'Ingresa el código de verificación (6 dígitos)';
 
   @override
-  String get phoneOrEmail => 'Teléfono o correo';
+  String get enterFullOtp =>
+      'Por favor ingresa el código completo de 6 dígitos';
 
   @override
-  String get password => 'Contraseña';
+  String otpSent(String identity) {
+    return 'Código de verificación enviado a $identity';
+  }
 
   @override
-  String get confirmPassword => 'Confirmar contraseña';
+  String resendCodeIn(int seconds) {
+    return 'Reenviar código en ${seconds}s';
+  }
 
   @override
-  String get fullName => 'Nombre completo';
+  String get resendCode => 'Reenviar código';
 
   @override
-  String get forgotPassword => '¿Olvidaste tu contraseña?';
+  String get switchAccount => 'Cambiar de cuenta';
 
   @override
-  String get dontHaveAccount => '¿No tienes una cuenta?';
+  String get verifyAndSignIn => 'Verificar e iniciar sesión';
 
   @override
-  String get alreadyHaveAccount => '¿Ya tienes una cuenta?';
+  String get usePasswordInstead => 'Usar contraseña en su lugar';
 
   @override
-  String get invalidEmail => 'Por favor ingresa un correo válido';
+  String get contactAdminForgot =>
+      'Comuníquese con el administrador para restablecer la contraseña o use OTP';
 
   @override
-  String get passwordTooShort =>
-      'La contraseña debe tener al menos 6 caracteres';
+  String get registeredMember => 'Miembro registrado';
 
   @override
-  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
+  String comingSoon(String provider) {
+    return 'Inicio de sesión con $provider próximamente';
+  }
 
   @override
-  String get nameRequired => 'El nombre completo es obligatorio';
+  String get verseText =>
+      '\"Porque donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos.\" — Mateo 18:20';
 }

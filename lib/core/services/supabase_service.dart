@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:politia/utils/input_detector.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Singleton service responsible for initializing and wrapping Supabase operations.
@@ -69,20 +70,30 @@ class SupabaseService {
   }
 
   /// Queries the `profiles` table to check if a user with the given [identity]
-  /// (email, primary phone, or secondary phone) exists.
+  /// (email, primary phone, secondary phone, or member ID) exists.
   Future<bool> checkUserExists(String identity) async {
     final cleanIdentity = identity.trim();
     if (cleanIdentity.isEmpty) return false;
 
     try {
-      // First attempt RPC if available
+      // 1. Check if input is a Member ID (^00\d{9}$)
+      if (InputDetector.detect(cleanIdentity) == InputType.memberId) {
+        final res = await client
+            .from('profiles')
+            .select('id')
+            .eq('member_id', cleanIdentity)
+            .maybeSingle();
+        return res != null;
+      }
+
+      // 2. First attempt RPC if available
       final rpcRes = await client.rpc('lookup_profile_by_identity', params: {
         'identity_input': cleanIdentity,
       });
 
       if (rpcRes != null) return true;
 
-      // Fallback query directly against profiles table
+      // 3. Fallback query directly against profiles table
       final isEmail = cleanIdentity.contains('@');
       var query = client.from('profiles').select('id');
 
@@ -98,7 +109,7 @@ class SupabaseService {
         final res = await client
             .from('profiles')
             .select('id')
-            .or('phone_number_primary.eq.$withPlus,phone_number_primary.eq.$localFormat,phone_number_secondary.eq.$withPlus,phone_number_secondary.eq.$localFormat')
+            .or('phone_number_primary.eq.$withPlus,phone_number_primary.eq.$localFormat,phone_number_secondary.eq.$withPlus,phone_number_secondary.eq.$localFormat,phone.eq.$withPlus,phone.eq.$localFormat')
             .maybeSingle();
 
         return res != null;
@@ -115,7 +126,17 @@ class SupabaseService {
     if (cleanIdentity.isEmpty) return null;
 
     try {
-      // First attempt RPC
+      // 1. Check if input is a Member ID
+      if (InputDetector.detect(cleanIdentity) == InputType.memberId) {
+        final res = await client
+            .from('profiles')
+            .select('id, full_name, full_name_en, full_name_ar, avatar_url, profile_picture_url, phone_number_primary, phone, email, member_id')
+            .eq('member_id', cleanIdentity)
+            .maybeSingle();
+        return res != null ? Map<String, dynamic>.from(res) : null;
+      }
+
+      // 2. First attempt RPC
       final rpcRes = await client.rpc('lookup_profile_by_identity', params: {
         'identity_input': cleanIdentity,
       });
@@ -124,12 +145,12 @@ class SupabaseService {
         return Map<String, dynamic>.from(rpcRes);
       }
 
-      // Fallback query
+      // 3. Fallback query
       final isEmail = cleanIdentity.contains('@');
       if (isEmail) {
         final res = await client
             .from('profiles')
-            .select('id, full_name_en, full_name_ar, avatar_url, profile_picture_url, phone_number_primary, email')
+            .select('id, full_name, full_name_en, full_name_ar, avatar_url, profile_picture_url, phone_number_primary, phone, email, member_id')
             .ilike('email', cleanIdentity)
             .maybeSingle();
         return res != null ? Map<String, dynamic>.from(res) : null;
@@ -140,8 +161,8 @@ class SupabaseService {
 
         final res = await client
             .from('profiles')
-            .select('id, full_name_en, full_name_ar, avatar_url, profile_picture_url, phone_number_primary, email')
-            .or('phone_number_primary.eq.$withPlus,phone_number_primary.eq.$localFormat,phone_number_secondary.eq.$withPlus,phone_number_secondary.eq.$localFormat')
+            .select('id, full_name, full_name_en, full_name_ar, avatar_url, profile_picture_url, phone_number_primary, phone, email, member_id')
+            .or('phone_number_primary.eq.$withPlus,phone_number_primary.eq.$localFormat,phone_number_secondary.eq.$withPlus,phone_number_secondary.eq.$localFormat,phone.eq.$withPlus,phone.eq.$localFormat')
             .maybeSingle();
 
         return res != null ? Map<String, dynamic>.from(res) : null;

@@ -25,6 +25,7 @@ class PolitiaBrandedBackground extends StatelessWidget {
 
     return Stack(
       fit: StackFit.expand,
+      clipBehavior: Clip.none,
       children: [
         // Layer 1: Clean background texture image
         Image.asset(

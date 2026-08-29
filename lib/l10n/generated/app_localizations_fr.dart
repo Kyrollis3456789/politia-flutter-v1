@@ -12,13 +12,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appTitle => 'Politia';
 
   @override
+  String get copticOrthodox => 'ORTHODOXE COPTE';
+
+  @override
   String get welcomeMessage => 'Bienvenue sur Politia';
 
   @override
   String get statusRunning => 'Moteur de plateforme opérationnel';
 
   @override
-  String get changeLanguage => 'Langue';
+  String get changeLanguage => 'Changer de langue';
+
+  @override
+  String get selectLanguage => 'CHOISIR LA LANGUE';
+
+  @override
+  String get welcome => 'BIENVENUE';
 
   @override
   String get welcomeBack => 'Bienvenue à nouveau';
@@ -28,6 +37,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get signUp => 'S\'INSCRIRE';
+
+  @override
+  String get signInDescription =>
+      'Entrez votre e-mail ou votre numéro de mobile enregistré pour continuer.';
 
   @override
   String get helloSignIn => 'Bonjour\nConnectez-vous!';
@@ -43,6 +56,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get phoneOrEmail => 'Téléphone ou E-mail';
+
+  @override
+  String get emailOrMobile => 'E-mail ou numéro de mobile';
+
+  @override
+  String get emailOrMobileHint => 'webx@gmail.com ou 010XXXXXXXX';
+
+  @override
+  String get supportedEgyptianCarriers =>
+      'Opérateurs égyptiens pris en charge: 010, 011, 012, 015';
+
+  @override
+  String get continueText => 'Continuer';
+
+  @override
+  String get orDivider => 'OU';
+
+  @override
+  String get continueWithGoogle => 'Continuer avec Google';
+
+  @override
+  String get continueWithFacebook => 'Continuer avec Facebook';
+
+  @override
+  String get continueWithApple => 'Continuer avec Apple';
 
   @override
   String get password => 'Mot de passe';
@@ -74,364 +112,84 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get nameRequired => 'Le nom complet est requis';
-}
 
-/// The translations for French, as used in Belgium (`fr_BE`).
-class AppLocalizationsFrBe extends AppLocalizationsFr {
-  AppLocalizationsFrBe() : super('fr_BE');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenue sur Politia';
-
-  @override
-  String get statusRunning => 'Moteur de plateforme opérationnel';
-
-  @override
-  String get changeLanguage => 'Langue';
-
-  @override
-  String get welcomeBack => 'Bienvenue à nouveau';
-
-  @override
-  String get signIn => 'SE CONNECTER';
-
-  @override
-  String get signUp => 'S\'INSCRIRE';
-
-  @override
-  String get helloSignIn => 'Bonjour\nConnectez-vous!';
-
-  @override
-  String get createYourAccount => 'Créez votre\ncompte';
-
-  @override
-  String get email => 'E-mail';
-
-  @override
-  String get emailOrUsername => 'E-mail ou nom d\'utilisateur';
-
-  @override
-  String get phoneOrEmail => 'Téléphone ou E-mail';
-
-  @override
-  String get password => 'Mot de passe';
-
-  @override
-  String get confirmPassword => 'Confirmez le mot de passe';
-
-  @override
-  String get fullName => 'Nom complet';
-
-  @override
-  String get forgotPassword => 'Mot de passe oublié?';
-
-  @override
-  String get dontHaveAccount => 'Vous n\'avez pas de compte?';
-
-  @override
-  String get alreadyHaveAccount => 'Vous avez déjà un compte?';
-
-  @override
-  String get invalidEmail => 'Veuillez saisir un e-mail valide';
-
-  @override
-  String get passwordTooShort =>
-      'Le mot de passe doit comporter au moins 6 caractères';
-
-  @override
-  String get passwordsDoNotMatch => 'Les mots de passe ne correspondent pas';
-
-  @override
-  String get nameRequired => 'Le nom complet est requis';
-}
-
-/// The translations for French, as used in Canada (`fr_CA`).
-class AppLocalizationsFrCa extends AppLocalizationsFr {
-  AppLocalizationsFrCa() : super('fr_CA');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenue sur Politia';
-
-  @override
-  String get statusRunning => 'Moteur de plateforme opérationnel';
-
-  @override
-  String get changeLanguage => 'Langue';
-
-  @override
-  String get welcomeBack => 'Bienvenue à nouveau';
-
-  @override
-  String get signIn => 'SE CONNECTER';
-
-  @override
-  String get signUp => 'S\'INSCRIRE';
-
-  @override
-  String get helloSignIn => 'Bonjour\nConnectez-vous!';
-
-  @override
-  String get createYourAccount => 'Créez votre\ncompte';
-
-  @override
-  String get email => 'E-mail';
-
-  @override
-  String get emailOrUsername => 'E-mail ou nom d\'utilisateur';
-
-  @override
-  String get phoneOrEmail => 'Téléphone ou E-mail';
-
-  @override
-  String get password => 'Mot de passe';
-
-  @override
-  String get confirmPassword => 'Confirmez le mot de passe';
-
-  @override
-  String get fullName => 'Nom complet';
-
-  @override
-  String get forgotPassword => 'Mot de passe oublié?';
-
-  @override
-  String get dontHaveAccount => 'Vous n\'avez pas de compte?';
-
-  @override
-  String get alreadyHaveAccount => 'Vous avez déjà un compte?';
-
-  @override
-  String get invalidEmail => 'Veuillez saisir un e-mail valide';
-
-  @override
-  String get passwordTooShort =>
-      'Le mot de passe doit comporter au moins 6 caractères';
-
-  @override
-  String get passwordsDoNotMatch => 'Les mots de passe ne correspondent pas';
-
-  @override
-  String get nameRequired => 'Le nom complet est requis';
-}
-
-/// The translations for French, as used in Switzerland (`fr_CH`).
-class AppLocalizationsFrCh extends AppLocalizationsFr {
-  AppLocalizationsFrCh() : super('fr_CH');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenue sur Politia';
-
-  @override
-  String get statusRunning => 'Moteur de plateforme opérationnel';
-
-  @override
-  String get changeLanguage => 'Langue';
-
-  @override
-  String get welcomeBack => 'Bienvenue à nouveau';
-
-  @override
-  String get signIn => 'SE CONNECTER';
-
-  @override
-  String get signUp => 'S\'INSCRIRE';
-
-  @override
-  String get helloSignIn => 'Bonjour\nConnectez-vous!';
-
-  @override
-  String get createYourAccount => 'Créez votre\ncompte';
-
-  @override
-  String get email => 'E-mail';
-
-  @override
-  String get emailOrUsername => 'E-mail ou nom d\'utilisateur';
-
-  @override
-  String get phoneOrEmail => 'Téléphone ou E-mail';
-
-  @override
-  String get password => 'Mot de passe';
-
-  @override
-  String get confirmPassword => 'Confirmez le mot de passe';
-
-  @override
-  String get fullName => 'Nom complet';
-
-  @override
-  String get forgotPassword => 'Mot de passe oublié?';
-
-  @override
-  String get dontHaveAccount => 'Vous n\'avez pas de compte?';
-
-  @override
-  String get alreadyHaveAccount => 'Vous avez déjà un compte?';
-
-  @override
-  String get invalidEmail => 'Veuillez saisir un e-mail valide';
-
-  @override
-  String get passwordTooShort =>
-      'Le mot de passe doit comporter au moins 6 caractères';
-
-  @override
-  String get passwordsDoNotMatch => 'Les mots de passe ne correspondent pas';
-
-  @override
-  String get nameRequired => 'Le nom complet est requis';
-}
-
-/// The translations for French, as used in France (`fr_FR`).
-class AppLocalizationsFrFr extends AppLocalizationsFr {
-  AppLocalizationsFrFr() : super('fr_FR');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenue sur Politia';
-
-  @override
-  String get statusRunning => 'Moteur de plateforme opérationnel';
-
-  @override
-  String get changeLanguage => 'Langue';
-
-  @override
-  String get welcomeBack => 'Bienvenue à nouveau';
-
-  @override
-  String get signIn => 'SE CONNECTER';
-
-  @override
-  String get signUp => 'S\'INSCRIRE';
-
-  @override
-  String get helloSignIn => 'Bonjour\nConnectez-vous!';
-
-  @override
-  String get createYourAccount => 'Créez votre\ncompte';
-
-  @override
-  String get email => 'E-mail';
-
-  @override
-  String get emailOrUsername => 'E-mail ou nom d\'utilisateur';
-
-  @override
-  String get phoneOrEmail => 'Téléphone ou E-mail';
-
-  @override
-  String get password => 'Mot de passe';
-
-  @override
-  String get confirmPassword => 'Confirmez le mot de passe';
-
-  @override
-  String get fullName => 'Nom complet';
-
-  @override
-  String get forgotPassword => 'Mot de passe oublié?';
-
-  @override
-  String get dontHaveAccount => 'Vous n\'avez pas de compte?';
-
-  @override
-  String get alreadyHaveAccount => 'Vous avez déjà un compte?';
-
-  @override
-  String get invalidEmail => 'Veuillez saisir un e-mail valide';
-
-  @override
-  String get passwordTooShort =>
-      'Le mot de passe doit comporter au moins 6 caractères';
-
-  @override
-  String get passwordsDoNotMatch => 'Les mots de passe ne correspondent pas';
-
-  @override
-  String get nameRequired => 'Le nom complet est requis';
-}
-
-/// The translations for French, as used in Luxembourg (`fr_LU`).
-class AppLocalizationsFrLu extends AppLocalizationsFr {
-  AppLocalizationsFrLu() : super('fr_LU');
-
-  @override
-  String get appTitle => 'Politia';
-
-  @override
-  String get welcomeMessage => 'Bienvenue sur Politia';
-
   @override
-  String get statusRunning => 'Moteur de plateforme opérationnel';
+  String get back => 'Retour';
 
   @override
-  String get changeLanguage => 'Langue';
+  String get enterEmailOrPhone =>
+      'Veuillez entrer votre e-mail ou numéro de téléphone';
 
   @override
-  String get welcomeBack => 'Bienvenue à nouveau';
+  String get invalidIdentityError =>
+      'Veuillez entrer un e-mail valide ou un numéro égyptien (010, 011, 012, 015)';
 
   @override
-  String get signIn => 'SE CONNECTER';
+  String get userNotRegistered =>
+      'E-mail ou numéro de téléphone non enregistré.';
 
   @override
-  String get signUp => 'S\'INSCRIRE';
+  String get enterPassword => 'Veuillez entrer votre mot de passe';
 
   @override
-  String get helloSignIn => 'Bonjour\nConnectez-vous!';
+  String get incorrectPassword => 'Mot de passe incorrect.';
 
   @override
-  String get createYourAccount => 'Créez votre\ncompte';
+  String attemptsRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tentatives restantes.',
+      one: '1 tentative restante.',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get email => 'E-mail';
+  String get maxAttemptsOtp =>
+      'Nombre maximum de tentatives atteint (10/10). Code de vérification (OTP) activé.';
 
   @override
-  String get emailOrUsername => 'E-mail ou nom d\'utilisateur';
+  String get enterOtpCode => 'Entrez le code de vérification (6 chiffres)';
 
   @override
-  String get phoneOrEmail => 'Téléphone ou E-mail';
+  String get enterFullOtp => 'Veuillez entrer le code OTP complet à 6 chiffres';
 
   @override
-  String get password => 'Mot de passe';
+  String otpSent(String identity) {
+    return 'Code de vérification envoyé à $identity';
+  }
 
   @override
-  String get confirmPassword => 'Confirmez le mot de passe';
+  String resendCodeIn(int seconds) {
+    return 'Renvoyer le code dans ${seconds}s';
+  }
 
   @override
-  String get fullName => 'Nom complet';
+  String get resendCode => 'Renvoyer le code';
 
   @override
-  String get forgotPassword => 'Mot de passe oublié?';
+  String get switchAccount => 'Changer de compte';
 
   @override
-  String get dontHaveAccount => 'Vous n\'avez pas de compte?';
+  String get verifyAndSignIn => 'Vérifier et se connecter';
 
   @override
-  String get alreadyHaveAccount => 'Vous avez déjà un compte?';
+  String get usePasswordInstead => 'Utiliser le mot de passe à la place';
 
   @override
-  String get invalidEmail => 'Veuillez saisir un e-mail valide';
+  String get contactAdminForgot =>
+      'Veuillez contacter l\'administrateur pour réinitialiser le mot de passe ou utiliser l\'OTP';
 
   @override
-  String get passwordTooShort =>
-      'Le mot de passe doit comporter au moins 6 caractères';
+  String get registeredMember => 'Membre inscrit';
 
   @override
-  String get passwordsDoNotMatch => 'Les mots de passe ne correspondent pas';
+  String comingSoon(String provider) {
+    return 'Connexion avec $provider bientôt disponible';
+  }
 
   @override
-  String get nameRequired => 'Le nom complet est requis';
+  String get verseText =>
+      '\"Car là où deux ou trois sont assemblés en mon nom, je suis au milieu d\'eux.\" — Matthieu 18:20';
 }

@@ -1,364 +1,270 @@
 import 'package:flutter/material.dart';
-import 'package:politia/core/localization/app_locales.dart';
+import 'package:politia/core/theme/app_colors_extension.dart';
+import 'package:politia/l10n/generated/app_localizations.dart';
 import 'package:politia/services/locale_service.dart';
 
-/// Interactive, searchable bottom sheet / dialog for picking from all 131 supported locales.
-class LanguageSelectionSheet extends StatefulWidget {
+class _LanguageOption {
+  final String flag;
+  final String title;
+  final String subtitle;
+  final Locale locale;
+  final String code;
+
+  const _LanguageOption({
+    required this.flag,
+    required this.title,
+    required this.subtitle,
+    required this.locale,
+    required this.code,
+  });
+}
+
+/// Clean scrollable language selection bottom sheet with 7 curated languages.
+class LanguageSelectionSheet extends StatelessWidget {
   const LanguageSelectionSheet({super.key});
+
+  static const List<_LanguageOption> _languages = [
+    _LanguageOption(
+      flag: '🇬🇧',
+      title: 'English',
+      subtitle: 'English',
+      locale: Locale('en'),
+      code: 'en',
+    ),
+    _LanguageOption(
+      flag: '🇪🇬',
+      title: 'العربية',
+      subtitle: 'Arabic',
+      locale: Locale('ar'),
+      code: 'ar',
+    ),
+    _LanguageOption(
+      flag: '🇫🇷',
+      title: 'Français',
+      subtitle: 'French',
+      locale: Locale('fr'),
+      code: 'fr',
+    ),
+    _LanguageOption(
+      flag: '🇮🇹',
+      title: 'Italiano',
+      subtitle: 'Italian',
+      locale: Locale('it'),
+      code: 'it',
+    ),
+    _LanguageOption(
+      flag: '🇩🇪',
+      title: 'Deutsch',
+      subtitle: 'German',
+      locale: Locale('de'),
+      code: 'de',
+    ),
+    _LanguageOption(
+      flag: '🇪🇸',
+      title: 'Español',
+      subtitle: 'Spanish',
+      locale: Locale('es'),
+      code: 'es',
+    ),
+    _LanguageOption(
+      flag: '☦️',
+      title: 'Ⲕⲟⲡⲧⲓ',
+      subtitle: 'Coptic',
+      locale: Locale('cop'),
+      code: 'cop',
+    ),
+  ];
 
   static Future<void> show(BuildContext context) {
     return showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (context) => const LanguageSelectionSheet(),
     );
   }
 
   @override
-  State<LanguageSelectionSheet> createState() => _LanguageSelectionSheetState();
-}
-
-class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
-  final TextEditingController _searchController = TextEditingController();
-  LocaleCategory? _selectedCategory;
-  String _searchQuery = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _searchController.addListener(() {
-      setState(() {
-        _searchQuery = _searchController.text.trim().toLowerCase();
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  List<PolitiaLocaleMetadata> get _filteredLocales {
-    return PolitiaLocales.all.where((meta) {
-      if (_selectedCategory != null && meta.category != _selectedCategory) {
-        return false;
-      }
-      if (_searchQuery.isEmpty) return true;
-
-      return meta.englishName.toLowerCase().contains(_searchQuery) ||
-          meta.nativeName.toLowerCase().contains(_searchQuery) ||
-          meta.tag.toLowerCase().contains(_searchQuery) ||
-          meta.languageCode.toLowerCase().contains(_searchQuery) ||
-          (meta.countryCode?.toLowerCase().contains(_searchQuery) ?? false);
-    }).toList();
-  }
-
-  bool _isCurrentlyActive(PolitiaLocaleMetadata? meta) {
-    final current = LocaleService.instance.currentLocale;
-    if (meta == null) {
-      return current == null;
-    }
-    if (current == null) return false;
-
-    if (current.languageCode != meta.languageCode) return false;
-    if (meta.countryCode != null && current.countryCode != meta.countryCode) {
-      return false;
-    }
-    if (meta.scriptCode != null && current.scriptCode != meta.scriptCode) {
-      return false;
-    }
-    return true;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final mediaQuery = MediaQuery.of(context);
-
-    final filtered = _filteredLocales;
+    final colors = context.appColors;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final currentCode = LocaleService.instance.currentLocale?.languageCode ??
+        Localizations.localeOf(context).languageCode;
 
     return Container(
-      height: mediaQuery.size.height * 0.85,
+      constraints: BoxConstraints(
+        maxHeight: screenHeight * 0.70,
+      ),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E24) : Colors.white,
+        color: isDark ? const Color(0xFF161513) : Colors.white,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        border: Border(
+          top: BorderSide(
+            color: isDark ? const Color(0xFF2A2722) : colors.border,
+            width: 1.2,
+          ),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
+            color: Colors.black.withValues(alpha: isDark ? 0.40 : 0.12),
             blurRadius: 20,
             offset: const Offset(0, -4),
           ),
         ],
       ),
-      child: Column(
-        children: [
-          // Drag Handle
-          const SizedBox(height: 12),
-          Container(
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: Colors.grey.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          const SizedBox(height: 12),
-
-          // Header Title
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.language_rounded,
-                  color: theme.colorScheme.primary,
-                  size: 26,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Select Language / اختر اللغة',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        '131 UI Locales & Regional Variations',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.close_rounded),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-
-          // Search Field
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Search language, country, code...',
-                prefixIcon: const Icon(Icons.search_rounded, size: 20),
-                suffixIcon: _searchQuery.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear_rounded, size: 18),
-                        onPressed: () => _searchController.clear(),
-                      )
-                    : null,
-                filled: true,
-                fillColor: isDark ? const Color(0xFF2A2A32) : const Color(0xFFF3F4F6),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-
-          // Category Chips
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                _buildCategoryChip('All (131)', null),
-                const SizedBox(width: 8),
-                _buildCategoryChip(
-                  'Liturgical (4)',
-                  LocaleCategory.liturgical,
-                ),
-                const SizedBox(width: 8),
-                _buildCategoryChip(
-                  'Global Multi-Regional (65)',
-                  LocaleCategory.global,
-                ),
-                const SizedBox(width: 8),
-                _buildCategoryChip(
-                  'European (34)',
-                  LocaleCategory.european,
-                ),
-                const SizedBox(width: 8),
-                _buildCategoryChip(
-                  'Asian & African (28)',
-                  LocaleCategory.asianAfrican,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Divider(height: 1),
-
-          // Locales List
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              children: [
-                // System Default Option
-                if (_searchQuery.isEmpty && _selectedCategory == null)
-                  _buildLocaleTile(
-                    title: 'System Default / إعدادات النظام',
-                    subtitle: 'Use device operating system language',
-                    tag: 'system',
-                    isSelected: _isCurrentlyActive(null),
-                    onTap: () {
-                      LocaleService.instance.setLocale(null);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-
-                // Render Filtered Locales
-                ...filtered.map((meta) {
-                  final isSelected = _isCurrentlyActive(meta);
-                  return _buildLocaleTile(
-                    title: meta.nativeName,
-                    subtitle: meta.englishName,
-                    tag: meta.tag,
-                    isRtl: meta.isRtl,
-                    isSelected: isSelected,
-                    onTap: () {
-                      LocaleService.instance.setLocale(meta.toLocale());
-                      Navigator.of(context).pop();
-                    },
-                  );
-                }),
-
-                if (filtered.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.search_off_rounded, size: 48, color: Colors.grey[400]),
-                          const SizedBox(height: 12),
-                          Text(
-                            'No matching languages found',
-                            style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-                          ),
-                        ],
-                      ),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Top Header: Drag Handle & Title
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Drag handle at top
+                  Container(
+                    width: 36,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: isDark
+                          ? const Color(0xFF3A3732)
+                          : Colors.grey.withValues(alpha: 0.35),
+                      borderRadius: BorderRadius.circular(2),
                     ),
                   ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+                  const SizedBox(height: 16),
 
-  Widget _buildCategoryChip(String label, LocaleCategory? category) {
-    final isSelected = _selectedCategory == category;
-    final theme = Theme.of(context);
-
-    return FilterChip(
-      label: Text(
-        label,
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-          color: isSelected ? Colors.white : null,
-        ),
-      ),
-      selected: isSelected,
-      onSelected: (_) {
-        setState(() {
-          _selectedCategory = category;
-        });
-      },
-      backgroundColor: theme.brightness == Brightness.dark
-          ? const Color(0xFF2A2A32)
-          : const Color(0xFFF3F4F6),
-      selectedColor: theme.colorScheme.primary,
-      checkmarkColor: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      side: BorderSide.none,
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-    );
-  }
-
-  Widget _buildLocaleTile({
-    required String title,
-    required String subtitle,
-    required String tag,
-    bool isRtl = false,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    final theme = Theme.of(context);
-    final primaryColor = theme.colorScheme.primary;
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 6),
-      decoration: BoxDecoration(
-        color: isSelected
-            ? primaryColor.withValues(alpha: 0.1)
-            : Colors.transparent,
-        borderRadius: BorderRadius.circular(12),
-        border: isSelected
-            ? Border.all(color: primaryColor.withValues(alpha: 0.4), width: 1.5)
-            : Border.all(color: Colors.transparent, width: 1.5),
-      ),
-      child: ListTile(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-        onTap: onTap,
-        title: Row(
-          children: [
-            Expanded(
-              child: Text(
-                title,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
-                  color: isSelected ? primaryColor : null,
-                ),
+                  // Title: Localized "SELECT LANGUAGE"
+                  Text(
+                    AppLocalizations.of(context).selectLanguage,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Cinzel',
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: colors.textPrimary,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(
-                tag,
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.5,
+
+            // Scrollable List of Language Option Cards
+            Flexible(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 32.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: _languages.map((lang) {
+                    final isSelected = currentCode == lang.code;
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: _buildLanguageCard(
+                        context: context,
+                        flag: lang.flag,
+                        title: lang.title,
+                        subtitle: lang.subtitle,
+                        isSelected: isSelected,
+                        isDark: isDark,
+                        onTap: () {
+                          LocaleService.instance.setLocale(lang.locale);
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
             ),
           ],
         ),
-        subtitle: Text(
-          subtitle,
-          style: theme.textTheme.bodySmall?.copyWith(
+      ),
+    );
+  }
+
+  Widget _buildLanguageCard({
+    required BuildContext context,
+    required String flag,
+    required String title,
+    required String subtitle,
+    required bool isSelected,
+    required bool isDark,
+    required VoidCallback onTap,
+  }) {
+    final colors = context.appColors;
+    const goldColor = Color(0xFFB8960C);
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          width: double.infinity,
+          height: 64,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
             color: isSelected
-                ? primaryColor.withValues(alpha: 0.8)
-                : Colors.grey[600],
+                ? goldColor.withValues(alpha: isDark ? 0.12 : 0.08)
+                : (isDark ? const Color(0xFF1C1A17) : const Color(0xFFFAFAFA)),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isSelected
+                  ? goldColor
+                  : (isDark ? const Color(0xFF2A2722) : const Color(0xFFE5E0D8)),
+              width: isSelected ? 1.5 : 1.0,
+            ),
+          ),
+          child: Row(
+            children: [
+              // Flag Emoji / Symbol
+              Text(
+                flag,
+                style: const TextStyle(fontSize: 28),
+              ),
+              const SizedBox(width: 14),
+
+              // Title and Subtitle
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                        color: isSelected ? goldColor : colors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        color: colors.textMuted,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Gold checkmark if selected
+              if (isSelected)
+                const Icon(
+                  Icons.check_circle_rounded,
+                  color: goldColor,
+                  size: 22,
+                ),
+            ],
           ),
         ),
-        trailing: isSelected
-            ? Icon(Icons.check_circle_rounded, color: primaryColor)
-            : null,
       ),
     );
   }

@@ -146,9 +146,11 @@ class _SplashScreenState extends State<SplashScreen>
                   final vw = constraints.maxWidth;
                   final vh = constraints.maxHeight;
 
+                  final isDesktop = MediaQuery.of(context).size.width > 600;
+
                   return Center(
                     child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 480.0),
+                      constraints: BoxConstraints(maxWidth: isDesktop ? 600.0 : 480.0),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: (vw * 0.07).clamp(20.0, 32.0),
@@ -159,6 +161,7 @@ class _SplashScreenState extends State<SplashScreen>
                           vh: vh,
                           isDark: isDark,
                           disableAnimations: disableAnimations,
+                          isDesktop: isDesktop,
                         ),
                       ),
                     ),
@@ -178,6 +181,7 @@ class _SplashScreenState extends State<SplashScreen>
     required double vh,
     required bool isDark,
     required bool disableAnimations,
+    required bool isDesktop,
   }) {
     // Theme-sensitive refined colors
     final navyTitleColor = isDark ? const Color(0xFFFFFFFF) : const Color(0xFF16203B);
@@ -189,134 +193,149 @@ class _SplashScreenState extends State<SplashScreen>
     final subtitleFontSize = (vw * 0.026).clamp(10.5, 11.8);
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // Main Centered Content
         Expanded(
           child: Center(
             child: SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // 1. BRAND LOGO (Centered with subtle ambient breathing aura)
-                  _buildAnimatedEntry(
-                    animation: _logoEntryAnimation,
-                    disableAnimations: disableAnimations,
-                    child: SizedBox(
-                      width: logoSize,
-                      height: logoSize,
-                      child: OverflowBox(
-                        maxWidth: logoSize * 1.6,
-                        maxHeight: logoSize * 1.6,
-                        child: _buildGlowingLogo(
-                          logoSize: logoSize,
-                          isDark: isDark,
-                          disableAnimations: disableAnimations,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: (vh * 0.024).clamp(16.0, 24.0)),
-
-                  // 2. MAIN APP TITLE: "POLITIA" (Primary 36 bold) / "COPTIC ORTHODOX" (Descriptor 20 w400)
-                  _buildAnimatedEntry(
-                    animation: _titleEntryAnimation,
-                    disableAnimations: disableAnimations,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'POLITIA',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Cinzel',
-                            fontWeight: FontWeight.bold,
-                            fontSize: (vw * 0.088).clamp(30.0, 36.0),
-                            color: navyTitleColor,
-                            letterSpacing: 2.5,
-                            height: 1.15,
-                            shadows: isDark
-                                ? [
-                                    Shadow(
-                                      color: Colors.black.withValues(alpha: 0.60),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 2),
-                                    ),
-                                  ]
-                                : null,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: isDesktop ? 72.0 : 0.0,
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // 1. BRAND LOGO (Centered with subtle ambient breathing aura)
+                      _buildAnimatedEntry(
+                        animation: _logoEntryAnimation,
+                        disableAnimations: disableAnimations,
+                        child: SizedBox(
+                          width: logoSize,
+                          height: logoSize,
+                          child: OverflowBox(
+                            maxWidth: logoSize * 1.6,
+                            maxHeight: logoSize * 1.6,
+                            child: _buildGlowingLogo(
+                              logoSize: logoSize,
+                              isDark: isDark,
+                              disableAnimations: disableAnimations,
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'COPTIC ORTHODOX',
+                      ),
+
+                      SizedBox(height: (vh * 0.024).clamp(16.0, 24.0)),
+
+                      // 2. MAIN APP TITLE: "POLITIA" (Primary 36 bold) / "COPTIC ORTHODOX" (Descriptor 20 w400)
+                      _buildAnimatedEntry(
+                        animation: _titleEntryAnimation,
+                        disableAnimations: disableAnimations,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'POLITIA',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Cinzel',
+                                fontWeight: FontWeight.bold,
+                                fontSize: (vw * 0.088).clamp(30.0, 36.0),
+                                color: navyTitleColor,
+                                letterSpacing: 2.5,
+                                height: 1.15,
+                                shadows: isDark
+                                    ? [
+                                        Shadow(
+                                          color: Colors.black.withValues(alpha: 0.60),
+                                          blurRadius: 8,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ]
+                                    : null,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              'COPTIC ORTHODOX',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Cinzel',
+                                fontWeight: FontWeight.w400,
+                                fontSize: (vw * 0.048).clamp(16.5, 20.0),
+                                color: navyTitleColor,
+                                letterSpacing: 2.0,
+                                height: 1.15,
+                                shadows: isDark
+                                    ? [
+                                        Shadow(
+                                          color: Colors.black.withValues(alpha: 0.50),
+                                          blurRadius: 6,
+                                          offset: const Offset(0, 2),
+                                        ),
+                                      ]
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: (vh * 0.016).clamp(10.0, 16.0)),
+
+                      // 3. ELEGANT GOLDEN CROSS DIVIDER LINE
+                      _buildAnimatedEntry(
+                        animation: _titleEntryAnimation,
+                        disableAnimations: disableAnimations,
+                        child: _buildCrossDivider(goldAccent),
+                      ),
+
+                      SizedBox(height: (vh * 0.014).clamp(10.0, 14.0)),
+
+                      // 4. SUBTITLE: "ANCHORED IN FAITH, CONNECTED IN LOVE"
+                      _buildAnimatedEntry(
+                        animation: _subtitleEntryAnimation,
+                        disableAnimations: disableAnimations,
+                        child: Text(
+                          'ANCHORED IN FAITH, CONNECTED IN LOVE',
                           textAlign: TextAlign.center,
+                          softWrap: true,
                           style: TextStyle(
                             fontFamily: 'Cinzel',
-                            fontWeight: FontWeight.w400,
-                            fontSize: (vw * 0.048).clamp(16.5, 20.0),
-                            color: navyTitleColor,
-                            letterSpacing: 2.0,
-                            height: 1.15,
-                            shadows: isDark
-                                ? [
-                                    Shadow(
-                                      color: Colors.black.withValues(alpha: 0.50),
-                                      blurRadius: 6,
-                                      offset: const Offset(0, 2),
-                                    ),
-                                  ]
-                                : null,
+                            fontWeight: FontWeight.w500,
+                            fontSize: subtitleFontSize,
+                            color: subtitleColor,
+                            letterSpacing: 2.2,
+                            height: 1.4,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(height: (vh * 0.016).clamp(10.0, 16.0)),
-
-                  // 3. ELEGANT GOLDEN CROSS DIVIDER LINE
-                  _buildAnimatedEntry(
-                    animation: _titleEntryAnimation,
-                    disableAnimations: disableAnimations,
-                    child: _buildCrossDivider(goldAccent),
-                  ),
-
-                  SizedBox(height: (vh * 0.014).clamp(10.0, 14.0)),
-
-                  // 4. SUBTITLE: "ANCHORED IN FAITH, CONNECTED IN LOVE"
-                  _buildAnimatedEntry(
-                    animation: _subtitleEntryAnimation,
-                    disableAnimations: disableAnimations,
-                    child: Text(
-                      'ANCHORED IN FAITH, CONNECTED IN LOVE',
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      style: TextStyle(
-                        fontFamily: 'Cinzel',
-                        fontWeight: FontWeight.w500,
-                        fontSize: subtitleFontSize,
-                        color: subtitleColor,
-                        letterSpacing: 2.2,
-                        height: 1.4,
                       ),
-                    ),
-                  ),
 
-                  SizedBox(height: (vh * 0.028).clamp(18.0, 26.0)),
+                      SizedBox(height: (vh * 0.028).clamp(18.0, 26.0)),
 
-                  // 5. SCRIPTURE CONTAINER CARD
-                  _buildAnimatedEntry(
-                    animation: _cardEntryAnimation,
-                    disableAnimations: disableAnimations,
-                    child: _buildScriptureCard(
-                      vw: vw,
-                      isDark: isDark,
-                      goldAccent: goldAccent,
-                    ),
+                      // 5. SCRIPTURE CONTAINER CARD
+                      _buildAnimatedEntry(
+                        animation: _cardEntryAnimation,
+                        disableAnimations: disableAnimations,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: isDesktop ? 500 : double.infinity,
+                          ),
+                          child: _buildScriptureCard(
+                            vw: vw,
+                            isDark: isDark,
+                            goldAccent: goldAccent,
+                            isDesktop: isDesktop,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -394,6 +413,7 @@ class _SplashScreenState extends State<SplashScreen>
     required double vw,
     required bool isDark,
     required Color goldAccent,
+    required bool isDesktop,
   }) {
     // Subtle, distinct background tint without heavy appearance
     final cardBg = isDark
@@ -402,7 +422,9 @@ class _SplashScreenState extends State<SplashScreen>
 
     final cardBorder = isDark
         ? goldAccent.withValues(alpha: 0.28)
-        : goldAccent.withValues(alpha: 0.32);
+        : const Color(0xFFB8960C);
+
+    final cardBorderWidth = isDark ? 1.0 : 1.5;
 
     // Warm, highly readable Arabic text color
     final verseTextColor = isDark
@@ -416,13 +438,13 @@ class _SplashScreenState extends State<SplashScreen>
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: (vw * 0.06).clamp(20.0, 28.0),
+        horizontal: isDesktop ? 32.0 : (vw * 0.06).clamp(20.0, 28.0),
         vertical: 20.0,
       ),
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(22.0),
-        border: Border.all(color: cardBorder, width: 1.0),
+        border: Border.all(color: cardBorder, width: cardBorderWidth),
         boxShadow: [
           BoxShadow(
             color: isDark

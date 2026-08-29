@@ -148,7 +148,9 @@ class _CustomAuthTextFieldState extends State<CustomAuthTextField> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryColor = colors.primary;
     final errorColor = colors.statusError;
-    final normalBorderColor = colors.border;
+    final normalBorderColor = isDark
+        ? colors.border
+        : const Color(0xFFB8960C).withValues(alpha: 0.5);
     final iconColor = colors.textMuted;
 
     final prefix = _resolvePrefixIcon(iconColor);
